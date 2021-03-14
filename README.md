@@ -19,9 +19,11 @@ Aplikacija je napravljena kako za parkinge na kojima se nalaze iskljucivo manji 
 
 
 
+
  Sprat | Red | Kolona 
  ------|-----|-------
    2   |  1  |   3 
+
 
 
 
