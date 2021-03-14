@@ -1,8 +1,6 @@
 # Grupa9-Tim3
 
-### Članovi tima or three (or more) `-` 
-
----
+### Članovi tima 
 
 1. [Jasmina Herić](https://github.com/jheric1)
 2. [Faris Matoruga](https://github.com/fmatoruga2)
