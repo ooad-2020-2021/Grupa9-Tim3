@@ -1,5 +1,3 @@
-# Grupa9-Tim3
-
 # Parking
 
 Ova aplikacija sluzi za ubrzavanje i olakšavanje korištenja usluga parkinga. Neke od osnovnih funkcija ove aplikacije su:
