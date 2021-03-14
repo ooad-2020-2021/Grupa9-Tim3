@@ -14,10 +14,7 @@ Sprat | Red | Kolona
 ------|-----|-------
   2   |  1  |   3 
 
-  - Sprat: 2
-  - Red: 1
-  - Kolona 3 
-
+ 
 Popuste mogu dobiti stalni korisnici, osobe s invaliditetom ili korisnici koji osvoje popust igrajući igricu "Parking" (ime nije konacno).    
 
 
