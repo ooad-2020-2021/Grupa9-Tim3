@@ -1,7 +1,7 @@
 # Grupa9-Tim3
 
 ### Članovi tima
-********
+***
 1. [Jasmina Herić](https://github.com/jheric1)
 2. [Faris Matoruga](https://github.com/fmatoruga2)
 3. [Muharem Kapo](https://github.com/mkapo3)
@@ -10,6 +10,7 @@
 ## Parking
 
 ### Funkcionalnosti
+***
 Ova aplikacija sluzi za ubrzavanje i olakšavanje korištenja usluga parkinga. Neke od osnovnih funkcija ove aplikacije su:
 - online provjera dostupnosti mjesta i pozicije tih mjesta
 - navođenja korisnika do njegovog mjesta
