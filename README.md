@@ -2,6 +2,11 @@
 
 # Parking
 
+# Članovi tima
+1. Nejra Hošić
+2. 
+
+# Funkcionalnosti
 Ova aplikacija sluzi za ubrzavanje i olakšavanje korištenja usluga parkinga. Neke od osnovnih funkcija ove aplikacije su:
 - online provjera dostupnosti mjesta i pozicije tih mjesta
 - navođenja korisnika do njegovog mjesta
