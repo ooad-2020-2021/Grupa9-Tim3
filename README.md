@@ -3,7 +3,7 @@
 # Parking
 
 # Članovi tima
-1. [title](https://github.com/mkapo3 "Muharem Kapo")
+1. [Muharem Kapo](https://github.com/mkapo3)
 2. 
 
 # Funkcionalnosti
