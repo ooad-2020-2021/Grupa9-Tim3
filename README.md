@@ -1,6 +1,7 @@
 # Grupa9-Tim3
 
 ### Članovi tima
+---
 1. [Jasmina Herić](https://github.com/jheric1)
 2. [Faris Matoruga](https://github.com/fmatoruga2)
 3. [Muharem Kapo](https://github.com/mkapo3)
