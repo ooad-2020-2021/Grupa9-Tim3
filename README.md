@@ -1,4 +1,4 @@
-# Grupa9-Tim3
+# Grupa9-Tim3-Zoom
 
 ### Članovi tima 
 
