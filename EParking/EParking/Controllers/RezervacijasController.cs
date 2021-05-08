@@ -7,9 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EParking.Data;
 using EParking.Models;
+using System.Net.Http;
+using System.Net;
 
 namespace EParking.Controllers
 {
+    public enum Popust
+    {
+        StalniGostUzastopno = 10,
+        StalniGostMjesecno = 15,
+        OsobaSInvaliditetom = 40,
+        PopustIgrica = 15
+    }
+
     public class RezervacijasController : Controller
     {
         // private readonly ApplicationDbContext _context;
@@ -22,6 +32,8 @@ namespace EParking.Controllers
             new Mjesto(2,1,3,true,KategorijaVozila.Kamion)
         };
 
+        static RegistrovaniKorisnik korisnik = new RegistrovaniKorisnik("Muharem Kapo", "muharemkapo@yahoo.com", "Musija",100, 20);
+
         public RezervacijasController(ApplicationDbContext context)
         {
             //_context = context;
@@ -31,6 +43,35 @@ namespace EParking.Controllers
         {
             mjesta = mjesta.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
             return View(mjesta);
+        }
+        [HttpPost]
+        public HttpResponseMessage provjeriKorisnika(string popust)
+        {/*
+            if (popust.Equals("StalniGostMjesecno"))
+            {
+
+            }
+            if (popust.Equals("StalniGostUzastopno"))
+            {
+
+            }
+            if (popust.Equals("OsobaSInvaliditetom") && korisnik.Invaliditet)
+            {
+                
+            }*/
+            var response = new HttpResponseMessage(HttpStatusCode.Created);
+            if (!korisnik.addPopust(popust))
+            {
+                response.Content = new StringContent("Korisnik nema pravo na taj popust");
+            }
+            else {
+                response.Content = new StringContent("Korisnik ima pravo na taj popust");
+            }
+
+            response.Headers.Location =      
+                new Uri(Url.Link("DefaultApi", new { action = "status" }));
+            return response;
+
         }
 
         // GET: Rezervacijas

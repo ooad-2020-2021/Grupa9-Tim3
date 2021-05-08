@@ -15,7 +15,7 @@ namespace EParking.Data
         }
         public DbSet<EParking.Models.Korisnik> Korisnik { get; set; }
         public DbSet<EParking.Models.Mjesto> Mjesto { get; set; }
-        public DbSet<EParking.Models.Popust> Popust { get; set; }
+        
         public DbSet<EParking.Models.RegistrovaniKorisnik> RegistrovaniKorisniks { get; set; }
         public DbSet<EParking.Models.Rezervacija> Rezervacija { get; set; }
     }

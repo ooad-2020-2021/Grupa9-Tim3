@@ -22,6 +22,8 @@ namespace EParking.Models
         [Required]
         public string Password { get; set; }
         #endregion
+        public Boolean Invaliditet { get; set; }
+
 
         #region Konstruktor
 

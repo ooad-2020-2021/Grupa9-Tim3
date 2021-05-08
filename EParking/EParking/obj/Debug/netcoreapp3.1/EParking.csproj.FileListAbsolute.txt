@@ -179,3 +179,6 @@ C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\View
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Details.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Edit.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Index.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\PromjenaLozinke\Index.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\PromjenaLozinke\PrikaziPoruku.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Administracija\Index.cshtml.g.cs
