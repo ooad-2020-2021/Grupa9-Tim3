@@ -29,7 +29,7 @@ namespace EParking
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySQL(
-                    Configuration.GetConnectionString("EParkingContext")));
+                    Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

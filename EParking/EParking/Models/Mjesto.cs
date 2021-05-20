@@ -6,17 +6,8 @@ using System.Threading.Tasks;
 
 namespace EParking.Models
 {
-    public enum KategorijaVozila
-    {
-        Automobil,
-        Motocikl,
-        Biciklo,
-        Kamion,
-        KampKucica,
-        Kombi
-    }
 
-    public class Mjesto
+    abstract public class Mjesto : IMjesto
     {
         public static int zadnjiID = 0;
 
@@ -32,27 +23,28 @@ namespace EParking.Models
         public int Kolona { get; set; }
         [Required]
         public Boolean Zauzeto { get; set; }
-        [Required]
-        public KategorijaVozila Kategorija { get; set; }
-
+        
         #endregion
-
         #region Konstruktor
-        public Mjesto (int sprat, int red, int kolona, Boolean zauzeto, KategorijaVozila kategorija)
+        public Mjesto()
         {
-            ID = generisiID();
-            Sprat = sprat;
-            Red = red;
-            Kolona = kolona;
-            Zauzeto = zauzeto;
-            Kategorija = kategorija;
         }
+
         #endregion
 
         #region Metode
         public int generisiID()
         {
             return zadnjiID++;
+        }
+
+        virtual public double dajCijena()
+        {
+            throw new NotImplementedException();
+        }
+        virtual public void postaviCijena(double cijena)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EParking.Data;
+using EParking.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,31 @@ namespace EParking.Controllers
 {
     public class AdministracijaController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public AdministracijaController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public IActionResult DodajMjesto()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> DodajMjesto([Bind("ID,Sprat,Red,Kolona,Zauzeto,Kategorija")] Mjesto mjesto)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(mjesto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(mjesto);
+        }
+        
         // GET: HomeController1
         public ActionResult Index()
         {

@@ -16,22 +16,27 @@ namespace EParking.Models
         public int ID { get; set; }
 
         [Required]
-        public Korisnik Korisnik { get; set; }   
+        public int KorisnikID { get; set; }   
         [Required]
-        public Mjesto Mjesto { get; set; }
+        public int MjestoID { get; set; }
         [Required]
         public DateTime VrijemeIsteka { get; set; }
+        [Required]
+        public DateTime VrijemePocetka { get; set; }
+
+
         #endregion
         
         
         #region Konstruktor
-        public Rezervacija (Korisnik korisnik,Mjesto mjesto, DateTime vrijemeIsteka)
+        public Rezervacija (int korisnik,int  mjesto, DateTime vrijemeIsteka, DateTime vrijemePocetka)
         {
 
             ID = generisiID();
-            Korisnik = korisnik;
-            Mjesto = mjesto;
+            KorisnikID = korisnik;
+            MjestoID = mjesto;
             VrijemeIsteka = vrijemeIsteka;
+            VrijemePocetka = vrijemePocetka;
         }
         /*public Rezervacija(Korisnik korisnik, Mjesto mjesto, DateTime vrijemeIsteka)
         {

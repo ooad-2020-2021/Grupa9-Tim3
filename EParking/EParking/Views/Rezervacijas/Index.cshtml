@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EParking.Models.Mjesto>
+﻿@model Tuple<EParking.Models.Rezervacija,IEnumerable<EParking.Models.Mjesto>>
 
 @{
     ViewData["Title"] = "Index";
@@ -92,6 +92,23 @@
   background-color:skyblue;
   display:compact;
 }
+
+    .showPopUp {
+        background-color: #e6fff2;
+        filter: alpha(opacity=100);
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+        z-index: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto
+    }
+
+
 .hidepopup
 {
   display:none;
@@ -110,23 +127,20 @@
         bottom: 0;
         margin: auto
     }
+    .vrijeme {
+        display: inline-block;
+    }
+
+    .vrijemeLabela {
+        display: block;
+    }
+
+
 </style>
 
 
 
-<script type="text/javascript">
 
-    function Display() {
-        document.getElementById("skybluediv").className="brown"
-    }
-    function HidePopup(kategorija, slika) {
-        document.getElementById("skybluediv").className = "hidepopup"
-        image = document.getElementById("slikakategorije")
-        image.src = slika
-
-    }
-
-</script>
 
 
 <div id="skybluediv" style="width:500px;height:700px;border-color:blue;border-style:solid" align="center" class="hidepopup">
@@ -138,33 +152,33 @@
 
     <div id="grid-gap">
         <div>
-            <img onclick="javascript: HidePopup('Auto', src);" src="https://s3.caradvice.com.au/wp-content/uploads/2013/10/Ferrari-F12-Berlinetta.jpg" width="200px" height="130px" />
+            <img onclick="javascript: HidePopup('Auto', src);" value="0" src="https://s3.caradvice.com.au/wp-content/uploads/2013/10/Ferrari-F12-Berlinetta.jpg" width="200px" height="130px" />
             <br />
             <b>Auto</b>
         </div>
         <div>
-            <img onclick="javascript: HidePopup('Kamion', src);" src="https://tse1.mm.bing.net/th?id=OIP.oi8i4c7L23Afj-nDN_5a5gHaE7&pid=Api&P=0&w=317&h=212" width="200px" height="130px" />
+            <img onclick="javascript: HidePopup('Kamion', src);" value="1" src="https://tse1.mm.bing.net/th?id=OIP.oi8i4c7L23Afj-nDN_5a5gHaE7&pid=Api&P=0&w=317&h=212" width="200px" height="130px" />
             <br />
             <b>Kamion</b>
         </div>
         <div>
-            <img onclick="javascript: HidePopup('Motocikl', src);" src="http://s1.cdn.autoevolution.com/images/news/bike-xxx-2015-yamaha-yzf-r1-endurance-world-championship-edition-shows-up-photo-gallery-92613_1.jpg" width="200px" height="130px" />
+            <img onclick="javascript: HidePopup('Motocikl', src);" value="2" src="http://s1.cdn.autoevolution.com/images/news/bike-xxx-2015-yamaha-yzf-r1-endurance-world-championship-edition-shows-up-photo-gallery-92613_1.jpg" width="200px" height="130px" />
             <br />
             <b>Motocikl</b>
         </div>
         <div>
             <img onclick="javascript: HidePopup('Biciklo', src);" 
-                 src="http://www.bicycleretailer.com/sites/default/files/images/article/Farrier%2024%20Print.jpg" width="200px" height="130px" />
+                 value="3" src="http://www.bicycleretailer.com/sites/default/files/images/article/Farrier%2024%20Print.jpg" width="200px" height="130px" />
             <br />
             <b>Biciklo</b>
         </div>
         <div>
-            <img onclick="javascript: HidePopup('Kombi', src);" src="https://www.carscoops.com/wp-content/uploads/2019/12/Murder-Van.jpg" width="200px" height="130px" />
+            <img onclick="javascript: HidePopup('Kombi', src);" value="4" src="https://www.carscoops.com/wp-content/uploads/2019/12/Murder-Van.jpg" width="200px" height="130px" />
             <br />
             <b>Kombi</b>
         </div>
         <div>
-            <img onclick="javascript: HidePopup('Kamp kucica', src);" src="https://www.fraserway.com/sites/default/files/2019-01/2018_Rentals_ClassC_Large_1070x680.png" width="200px" height="130px" />
+            <img onclick="javascript: HidePopup('Kamp kucica', src);" value="5" src="https://www.fraserway.com/sites/default/files/2019-01/2018_Rentals_ClassC_Large_1070x680.png" width="200px" height="130px" />
             <br />
             <b>Kamp kucica</b>
         </div>
@@ -174,6 +188,13 @@
     <button class="button-corner" onclick="javascript: HidePopup();"> <b>Zatvori</b></button>
 </div>
 
+<div id="errorDiv" style="width:250px;height:200px;border-color:blue;border-style:solid" align="center" class="hidepopup">
+    <p><b>Greška</b></p>
+    <hr />
+    <p>Pogrešan unos!</p>
+    <button class="button-corner" onclick="javascript: Zatvori();"> <b>Zatvori</b></button>
+</div>
+
     <h1 style="padding-bottom:50px">Rezervacija</h1>
 
     <div>
@@ -181,35 +202,32 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Sprat)
+                        @Html.DisplayNameFor(model => model.Item2.ElementAt(0).Sprat)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Red)
+                        @Html.DisplayNameFor(model => model.Item2.ElementAt(0).Red)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Kolona)
+                        @Html.DisplayNameFor(model => model.Item2.ElementAt(0).Kolona)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Kategorija)
+                        Vrsta vozila
                     </th>
 
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Item2)
                 {
                     <tr>
-                        <td>
+                        <td name="sprat">
                             @Html.DisplayFor(modelItem => item.Sprat)
                         </td>
-                        <td>
+                        <td name="red">
                             @Html.DisplayFor(modelItem => item.Red)
                         </td>
-                        <td>
+                        <td name="kolona">
                             @Html.DisplayFor(modelItem => item.Kolona)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Kategorija)
                         </td>
 
                     </tr>
@@ -219,88 +237,129 @@
 
 
     </div>
+    <form asp-action="Index">
+        <div style="padding-top:150px">
+            <b style="padding-right:10px ; font-size:17px">Kategorija: </b>
+            <br />
+            <button onclick="javascript: Display();"><b>Izaberi kategoriju</b></button>
 
-    <div style="padding-top:150px">
-        <b style="padding-right:10px ; font-size:17px">Kategorija: </b>
-        <br />
-        <button onclick="javascript: Display();"><b>Izaberi kategoriju</b></button>
+            <img style="margin-left:40px" id="slikakategorije" src="https://s3.caradvice.com.au/wp-content/uploads/2013/10/Ferrari-F12-Berlinetta.jpg" width="200px" height="100px" />
+            <hr />
+        </div>
 
-        <img style="margin-left:40px" id="slikakategorije"src="https://s3.caradvice.com.au/wp-content/uploads/2013/10/Ferrari-F12-Berlinetta.jpg" width="200px" height="100px" />
+
+        <div style="padding-top:20px">
+            <b style="padding-right:10px ; font-size:17px">Mjesto: </b>
+
+            <input id="sprat" style="text-align:center" type="number" min="0" max="59" step="1" value="0" size="3" name="cantitate" onkeydown="return false">
+            <input id="red" style="text-align:center" type="number" min="0" max="59" step="1" value="0" size="3" name="cantitate" onkeydown="return false">
+            <input id="kolona" style="text-align:center" type="number" min="0" max="59" step="1" value="0" size="3" name="cantitate" onkeydown="return false">
+
+            <hr />
+        </div>
+
+
+
+
+        <div style="padding-top:20px">
+
+
+
+            <b style="padding-right:10px ; font-size:17px">Popust: </b>
+
+            <select style="font-size:14px; margin-right:35px">
+                <option value="StalniGostUzastopno">
+                    Stalni gost uzastopno
+                </option>
+                <option value="StalniGostMjesecno">
+                    Stalni gost mjesečno
+                </option>
+                <option value="OsobaSInvaliditetom">
+                    Osoba s invaliditetom
+                </option>
+
+            </select>
+
+            <button onclick="https://www.yModelutube.com/"><b>Pokreni igricu za popust</b></button>
+
+        </div>
         <hr />
-    </div>
 
+        <div>
+            <p style="font-size:17px"><b>Vrijeme rezervacije: </b></p>
+            <div class="vrijeme">
+                <label class="vrijemeLabela">Početak rezervacije: </label>
+                <div class="vrijeme">
 
-    <div style="padding-top:20px">
-        <b style="padding-right:10px ; font-size:17px">Mjesto: </b>
+                    <input id="pocetakSati" style="text-align:center" type="number" min="0" max="23" step="1" value="0" size="3" name="cantitate" onkeydown="return false" />
+                </div>
+                <div class="vrijeme"><b>:</b></div>
+                <div class="vrijeme">
+                    <input id="pocetakMinute" style="text-align:center" type="number" min="0" max="59" step="1" value="0" size="3" name="cantitate" onkeydown="return false">
+                </div>
+            </div>
+            <div style="margin-left:30px" class="vrijeme">
+                <label class="vrijemeLabela">Kraj rezervacije: </label>
+                <div class="vrijeme">
 
-        <select>
-            <option value="1">
-                1
-            </option>
-            <option value="2">
-                2
-            </option>
-            <option value="3">
-                3
-            </option>
+                    <input id="krajSati" style="text-align:center" type="number" min="0" max="23" step="1" value="0" size="3" name="cantitate" onkeydown="return false">
+                </div>
+                <div class="vrijeme"><b>:</b></div>
+                <div class="vrijeme">
+                    <input id="krajMinute" style="text-align:center" type="number" min="0" max="59" step="1" value="0" size="3" name="cantitate" onkeydown="return false">
+                </div>
+            </div>
+        </div>
 
-        </select>
-
-        <select>
-            <option value="1">
-                1
-            </option>
-            <option value="2">
-                2
-            </option>
-            <option value="3">
-                3
-            </option>
-
-        </select>
-
-        <select>
-            <option value="1">
-                1
-            </option>
-            <option value="2">
-                2
-            </option>
-            <option value="3">
-                3
-            </option>
-
-        </select>
-        <hr />
-    </div>
-
-
-
-
-    <div style="padding-top:20px">
-
-
-
-        <b style="padding-right:10px ; font-size:17px">Popust: </b>
-
-        <select style="font-size:14px; margin-right:35px" >
-            <option value="StalniGostUzastopno">
-                Stalni gost uzastopno
-            </option>
-            <option value="StalniGostMjesecno">
-                Stalni gost mjesečno
-            </option>
-            <option value="OsobaSInvaliditetom">
-                Osoba s invaliditetom
-            </option>
-
-        </select>
-
-        <button onclick="https://www.yModelutube.com/"><b>Pokreni igricu za popust</b></button>
-
-    </div>
-    <hr />
+    </form>
     
-    <button style="margin-top:50px; width:200px; font-size:15px" asp-area="" asp-controller="Rezervacijas" asp-action="provjeriKorisnika"><b>Završi rezervaciju</b></button>    
+    <button style="margin-top:50px; width:200px; font-size:15px" onclick="javascript: Provjera();" asp-area="" asp-controller="Rezervacijas" asp-action="provjeriKorisnika"><b>Završi rezervaciju</b></button>    
 
+    <script type="text/javascript">
+
+        var izabranaKategorija
+
+        function Zatvori() {
+            document.getElementById("errorDiv").className = "hidepopup"
+        }
+        function Display() {
+            document.getElementById("skybluediv").className = "brown"
+        }
+        function HidePopup(kategorija, slika) {
+            document.getElementById("skybluediv").className = "hidepopup"
+            image = document.getElementById("slikakategorije")
+            image.src = slika
+            izabranaKategorija = kategorija
+        }
+        function Provjera() {
+
+            var sprat = document.getElementById("sprat").value
+            var red = document.getElementById("red").value
+            var kolona = document.getElementById("kolona").value
+            var tabela = document.getElementById("tabelaMjesta")
+            var ureduMjesto = false
+            
+
+            var rows = tabela.rows
+            
+            var n1 = rows.length
+            for (i = 1; i < n1; i++) {
+
+                var x = rows[i].cells.item(0).innerHTML;
+                var y = rows[i].cells.item(1).innerHTML;
+                var z = rows[i].cells.item(2).innerHTML;
+                var kat = rows[i].cells.item(3).innerText;
+                if (parseInt(x, 10) == sprat && parseInt(y, 10) == red && parseInt(z, 10) == kolona && kat == izabranaKategorija) {
+                        ureduMjesto = true
+                        break
+                    }                    
+
+             }
+            if (ureduMjesto == false) {
+                document.getElementById("errorDiv").className = "showPopUp"
+
+            }
+        }
+
+    </script>
 

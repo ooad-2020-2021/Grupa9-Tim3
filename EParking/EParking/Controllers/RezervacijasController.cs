@@ -22,8 +22,8 @@ namespace EParking.Controllers
 
     public class RezervacijasController : Controller
     {
-        // private readonly ApplicationDbContext _context;
-
+        private readonly ApplicationDbContext _context;
+        /*
         static List<Mjesto> mjesta = new List<Mjesto>()
         {
             new Mjesto(1,1,1,false,KategorijaVozila.Automobil),
@@ -33,18 +33,39 @@ namespace EParking.Controllers
         };
 
         static RegistrovaniKorisnik korisnik = new RegistrovaniKorisnik("Muharem Kapo", "muharemkapo@yahoo.com", "Musija",100, 20);
-
+        */
         public RezervacijasController(ApplicationDbContext context)
         {
-            //_context = context;
+            _context = context;
+        }
+        
+        
+
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
+
+            return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (null,mjesta));
+        }
+       
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Index([Bind("ID,KorisnikID,MjestoID,VrijemeIsteka,VrijemePocetka")] Rezervacija rezervacija)
+        {
+            IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
+            if (ModelState.IsValid)
+            {
+        
+                _context.Add(rezervacija);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (rezervacija,mjesta));
         }
 
-        public IActionResult Index()
-        {
-            mjesta = mjesta.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
-            return View(mjesta);
-        }
-        [HttpPost]
+        /*[HttpPost]
         public HttpResponseMessage provjeriKorisnika(string popust)
         {/*
             if (popust.Equals("StalniGostMjesecno"))
@@ -58,7 +79,7 @@ namespace EParking.Controllers
             if (popust.Equals("OsobaSInvaliditetom") && korisnik.Invaliditet)
             {
                 
-            }*/
+            }
             var response = new HttpResponseMessage(HttpStatusCode.Created);
             if (!korisnik.addPopust(popust))
             {
@@ -73,7 +94,7 @@ namespace EParking.Controllers
             return response;
 
         }
-
+         */
         // GET: Rezervacijas
         /*public async Task<IActionResult> Index()
         {
@@ -115,7 +136,7 @@ namespace EParking.Controllers
 
 
 
-        /*
+        
 
         // GET: Rezervacijas/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -172,7 +193,7 @@ namespace EParking.Controllers
             }
             return View(rezervacija);
         }
-
+/*
         // POST: Rezervacijas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
