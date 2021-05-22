@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EParking
 {
-    public partial class AspNetUser
+    public class AspNetUser
     {
         public AspNetUser()
         {

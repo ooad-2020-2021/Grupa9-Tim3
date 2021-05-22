@@ -30,6 +30,14 @@ namespace EParking.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            foreach (var entity in builder.Model.GetEntityTypes())
+            {
+                if (entity.BaseType == null)
+                {
+                    entity.SetTableName(entity.DisplayName());
+                }
+            }
+            /*
             builder.Entity<Korisnik>().ToTable("Korisnik");
             builder.Entity<Mjesto>().ToTable("Mjesto");
             builder.Entity<RegistrovaniKorisnik>().ToTable("RegistrovaniKorisnik");
@@ -43,8 +51,8 @@ namespace EParking.Data
             builder.Entity<StalniGostUzastopnoPopust>().ToTable("StalniGostUzastopnoPopust");
             builder.Entity<StalniGostMjesecnoPopust>().ToTable("StalniGostMjesecnoPopust");
             builder.Entity<OsobaSInvaliditetomPopust>().ToTable("OsobaSInvaliditetomPopust");
-
-            //base.OnModelCreating(builder);
+            */
+            base.OnModelCreating(builder);
 
         }
     }
