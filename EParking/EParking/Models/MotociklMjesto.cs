@@ -8,6 +8,8 @@ namespace EParking.Models
 {
     public class MotociklMjesto : Mjesto
     {
+
+
         public static double cijena;
 
         public MotociklMjesto(int sprat, int red, int kolona, Boolean zauzeto, int cijena)

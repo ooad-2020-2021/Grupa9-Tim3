@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EParking.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -31,8 +31,8 @@ namespace EParking.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Korisnik>().ToTable("Korisnik");
-            builder.Entity<RegistrovaniKorisnik>().ToTable("RegistrovaniKorisnik");
             builder.Entity<Mjesto>().ToTable("Mjesto");
+            builder.Entity<RegistrovaniKorisnik>().ToTable("RegistrovaniKorisnik");
             builder.Entity<Rezervacija>().ToTable("Rezervacija");
             builder.Entity<AutobusMjesto>().ToTable("AutobusMjesto");
             builder.Entity<AutomobilMjesto>().ToTable("AutomobilMjesto");
@@ -44,7 +44,7 @@ namespace EParking.Data
             builder.Entity<StalniGostMjesecnoPopust>().ToTable("StalniGostMjesecnoPopust");
             builder.Entity<OsobaSInvaliditetomPopust>().ToTable("OsobaSInvaliditetomPopust");
 
-            base.OnModelCreating(builder);
+            //base.OnModelCreating(builder);
 
         }
     }

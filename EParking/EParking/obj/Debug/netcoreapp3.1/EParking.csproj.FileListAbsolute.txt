@@ -166,14 +166,9 @@ C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\MySql.Data
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Renci.SshNet.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\SshNet.Security.Cryptography.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\System.Xml.XPath.XmlDocument.dll
-C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
-C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
-C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
@@ -189,3 +184,8 @@ C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\runtimes\w
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll

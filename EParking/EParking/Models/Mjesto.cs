@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EParking.Models
 {
 
-    abstract public class Mjesto : IMjesto
+    public abstract class Mjesto : IMjesto
     {
         public static int zadnjiID = 0;
 
@@ -25,12 +25,7 @@ namespace EParking.Models
         public Boolean Zauzeto { get; set; }
         
         #endregion
-        #region Konstruktor
-        public Mjesto()
-        {
-        }
-
-        #endregion
+        
 
         #region Metode
         public int generisiID()

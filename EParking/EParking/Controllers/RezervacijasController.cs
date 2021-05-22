@@ -43,9 +43,10 @@ namespace EParking.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
+            //IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
 
-            return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (null,mjesta));
+            //return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (null,mjesta));
+            return View();
         }
        
 
@@ -54,7 +55,7 @@ namespace EParking.Controllers
 
         public async Task<IActionResult> Index([Bind("ID,KorisnikID,MjestoID,VrijemeIsteka,VrijemePocetka")] Rezervacija rezervacija)
         {
-            IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
+            // IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
             if (ModelState.IsValid)
             {
         
@@ -62,7 +63,8 @@ namespace EParking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (rezervacija,mjesta));
+            //return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (rezervacija,mjesta));
+            return View();
         }
 
         /*[HttpPost]
