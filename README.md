@@ -23,6 +23,6 @@ Aplikacija je napravljena kako za parkinge na kojima se nalaze isključivo manji
  ------|-----|-------
    2   |  1  |   3 
 
-Popuste mogu dobiti stalni korisnici, tj. aplikacija ima mogućnost da čuva podatke o tome koliko dana uzastopno neki korisnik koristi parking. Pored toga, popuste i odvojena mjesta imaju osobe s invaliditetom. Jedan od načina da korisnik osvoji popust je kroz igricu "Parking" (ime nije konačno). Ideja igrice bi bila da igrač treba pravilno parkirati automobil (bez sudara) u određenom vremenu da bi osvojio popust, pri čemu samo nekoliko prvih igrača ima mogućnost na taj popust.   
+Popuste mogu dobiti stalni korisnici, tj. aplikacija ima mogućnost da čuva podatke o tome koliko dana uzastopno neki korisnik koristi parking. Pored toga, popuste i odvojena mjesta imaju osobe s invaliditetom.   
 
 
