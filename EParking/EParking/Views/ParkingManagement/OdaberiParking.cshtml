@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EParking.Models.Parking>
+
+@{
+    ViewData["Title"] = "OdaberiParking";
+}
+
+
+<h1>Izaberite vaš parking</h1>
+
+<table style="margin-top:50px"class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+ 
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td>
+                    <a asp-action="UnesiSifru" asp-route-id="@item.ID">Odaberi</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

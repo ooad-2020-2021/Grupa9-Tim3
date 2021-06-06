@@ -7,7 +7,7 @@ namespace EParking.Models
 {
     interface IMjesto
     {
-        public double dajCijena();
-        void postaviCijena(double cijena);
+        public double dajCijena(double cijena);
+        
     }
 }

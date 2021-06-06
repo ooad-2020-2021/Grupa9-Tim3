@@ -1,51 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EParking.Models
 {
+    public class DatumIzBuducnosti : RangeAttribute
+    {
+        public DatumIzBuducnosti() : base(typeof(DateTime), DateTime.Now.ToString(), DateTime.MaxValue.ToString())
+        {
+        }
+    }
     public class Rezervacija
     {
-        public static int zadnjiID = 0;
-
         #region Properties
         [Key]
         [Required]
         public int ID { get; set; }
-
         [Required]
-        public int KorisnikID { get; set; }   
+        [ForeignKey("Korisnik")]
+        public string KorisnikID { get; set; }   
         [Required]
+        [ForeignKey("Mjesto")]
+       
         public int MjestoID { get; set; }
         [Required]
-        public DateTime VrijemeIsteka { get; set; }
-        [Required]
+        [DatumIzBuducnosti(ErrorMessage = "Datum mora biti u budućnosti!")]
         public DateTime VrijemePocetka { get; set; }
 
+        [Required]
+        [DatumIzBuducnosti(ErrorMessage = "Datum mora biti u budućnosti!")]
+        public DateTime VrijemeIsteka { get; set; }
 
+        [Required]
+        public double Cijena { get; set; }
         #endregion
-        
-        
         #region Konstruktor
-        public Rezervacija (int korisnik,int  mjesto, DateTime vrijemeIsteka, DateTime vrijemePocetka)
-        {
-
-            ID = generisiID();
-            KorisnikID = korisnik;
-            MjestoID = mjesto;
-            VrijemeIsteka = vrijemeIsteka;
-            VrijemePocetka = vrijemePocetka;
-        }
-        /*public Rezervacija(Korisnik korisnik, Mjesto mjesto, DateTime vrijemeIsteka)
-        {
-            ID = generisiID();
-            Korisnik = korisnik;
-            Mjesto = mjesto;
-            VrijemeIsteka = vrijemeIsteka;
-        }*/
-
+        
         public Rezervacija()
         {
 
@@ -53,15 +46,6 @@ namespace EParking.Models
 
         #endregion
         
-        
-        #region Metode
-
-        public int generisiID()
-        {
-            return zadnjiID++;
-        }
-
-        #endregion
 
     }
 }

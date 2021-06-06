@@ -7,8 +7,9 @@ namespace EParking.Models
 {
     interface IPopust
     {
-        double Iznos { get; set; }
-        
+        public double dajIznos();
+        public int dajKriterij();
         public string PrikaziGresku();
+
     }
 }

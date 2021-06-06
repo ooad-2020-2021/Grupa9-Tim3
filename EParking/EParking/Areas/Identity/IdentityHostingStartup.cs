@@ -1,5 +1,6 @@
 ﻿using System;
 using EParking.Data;
+using EParking.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -15,6 +16,7 @@ namespace EParking.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                
             });
         }
     }

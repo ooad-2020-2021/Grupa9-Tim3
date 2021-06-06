@@ -17,6 +17,20 @@ namespace EParking.Migrations
                 .HasAnnotation("ProductVersion", "3.1.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("EParking.Models.IzabranaKategorijaVozila", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Vozilo")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("IzabranaKategorijaVozila");
+                });
+
             modelBuilder.Entity("EParking.Models.Korisnik", b =>
                 {
                     b.Property<string>("Id")
@@ -26,14 +40,12 @@ namespace EParking.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
+                        .IsConcurrencyToken()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
@@ -44,11 +56,16 @@ namespace EParking.Migrations
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp");
+
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
@@ -59,6 +76,9 @@ namespace EParking.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int>("ProvedenoVrijeme")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -66,13 +86,22 @@ namespace EParking.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<int>("UzastopnoVrijeme")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Korisnik");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Korisnik");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("EParking.Models.Mjesto", b =>
@@ -86,6 +115,9 @@ namespace EParking.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("Kolona")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ParkingId")
                         .HasColumnType("int");
 
                     b.Property<int>("Red")
@@ -115,14 +147,45 @@ namespace EParking.Migrations
                     b.ToTable("OsobaSInvaliditetomPopust");
                 });
 
+            modelBuilder.Entity("EParking.Models.Parking", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("KrajJeftinogVremena")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("KrajRadnogVremena")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PocetakJeftinogVremena")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("PocetakRadnogVremena")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Parking");
+                });
+
             modelBuilder.Entity("EParking.Models.Rezervacija", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("KorisnikID")
-                        .HasColumnType("int");
+                    b.Property<double>("Cijena")
+                        .HasColumnType("double");
+
+                    b.Property<string>("KorisnikID")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("MjestoID")
                         .HasColumnType("int");
@@ -160,25 +223,141 @@ namespace EParking.Migrations
                     b.ToTable("StalniGostUzastopnoPopust");
                 });
 
-            modelBuilder.Entity("EParking.Models.RegistrovaniKorisnik", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.HasBaseType("EParking.Models.Korisnik");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(767)");
 
-                    b.Property<int>("ProvedenoVrijeme")
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("UzastopnoVrijeme")
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("RegistrovaniKorisnik");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("varchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("varchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("varchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("EParking.Models.AutobusMjesto", b =>
                 {
                     b.HasBaseType("EParking.Models.Mjesto");
-
-                    b.Property<double>("Cijena")
-                        .HasColumnType("double");
 
                     b.HasDiscriminator().HasValue("AutobusMjesto");
                 });
@@ -211,11 +390,69 @@ namespace EParking.Migrations
                     b.HasDiscriminator().HasValue("KampKucicaMjesto");
                 });
 
+            modelBuilder.Entity("EParking.Models.KombiMjesto", b =>
+                {
+                    b.HasBaseType("EParking.Models.Mjesto");
+
+                    b.HasDiscriminator().HasValue("KombiMjesto");
+                });
+
             modelBuilder.Entity("EParking.Models.MotociklMjesto", b =>
                 {
                     b.HasBaseType("EParking.Models.Mjesto");
 
                     b.HasDiscriminator().HasValue("MotociklMjesto");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("EParking.Models.Korisnik", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("EParking.Models.Korisnik", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EParking.Models.Korisnik", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("EParking.Models.Korisnik", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

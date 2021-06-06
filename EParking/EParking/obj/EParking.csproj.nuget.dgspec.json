@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ehlimana\\Documents\\GitHub\\Grupa9-Zoom\\EParking\\EParking\\EParking.csproj": {}
+    "C:\\Users\\muhar\\source\\repos\\EParking\\EParking\\EParking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ehlimana\\Documents\\GitHub\\Grupa9-Zoom\\EParking\\EParking\\EParking.csproj": {
+    "C:\\Users\\muhar\\source\\repos\\EParking\\EParking\\EParking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ehlimana\\Documents\\GitHub\\Grupa9-Zoom\\EParking\\EParking\\EParking.csproj",
+        "projectUniqueName": "C:\\Users\\muhar\\source\\repos\\EParking\\EParking\\EParking.csproj",
         "projectName": "EParking",
-        "projectPath": "C:\\Users\\Ehlimana\\Documents\\GitHub\\Grupa9-Zoom\\EParking\\EParking\\EParking.csproj",
-        "packagesPath": "C:\\Users\\Ehlimana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ehlimana\\Documents\\GitHub\\Grupa9-Zoom\\EParking\\EParking\\obj\\",
+        "projectPath": "C:\\Users\\muhar\\source\\repos\\EParking\\EParking\\EParking.csproj",
+        "packagesPath": "C:\\Users\\muhar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\muhar\\source\\repos\\EParking\\EParking\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Ehlimana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\muhar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +30,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +42,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -47,6 +53,10 @@
               "version": "[3.1.15, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.1.15, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.15, )"
             },
@@ -87,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

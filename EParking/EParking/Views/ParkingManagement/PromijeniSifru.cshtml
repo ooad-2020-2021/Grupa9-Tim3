@@ -1,0 +1,168 @@
+﻿@model EParking.Models.Parking
+
+@{
+    var data = ViewBag.sifra;
+}
+
+<h1>Promjena šifre</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+<style type="text/css">
+    button {
+        display: inline-block;
+        background-color: mediumaquamarine;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: black;
+        text-align: center;
+        font-size: 12px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+    .button-corner {
+        display: inline-block;
+        background-color: mediumaquamarine;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: black;
+        text-align: center;
+        font-size: 12px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+
+
+    .showPopUp {
+        background-color: #e6fff2;
+        filter: alpha(opacity=100);
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+        z-index: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto
+    }
+
+    .hidepopup {
+        display: none;
+    }
+    .float-container {
+        width: 350px;
+        margin-top: 30px;
+       
+    }
+
+    .float-child1 {
+        width: 60%;
+        float: left;
+    }
+
+    .float-child2 {
+        width: 10%;
+        float: left;
+    }
+
+    .float-child3 {
+        width: 30%;
+        float: left;
+    }
+</style>
+
+<div id="errorDivMjesto" style="width:250px;height:200px;border-color:blue;border-style:solid" align="center" class="hidepopup">
+    <p><b>Greška</b></p>
+    <hr />
+    <p>Pogrešna šifra!</p>
+    <button class="button-corner" onclick="javascript: Zatvori();"> <b>Zatvori</b></button>
+</div>
+
+<div  class="row">
+    <div class="col-md-4">
+        <form id="form-sifra" asp-action="PromijeniSifru">
+            <input asp-for="ID" type="hidden" />
+            <input asp-for="Naziv" type="hidden" />
+            <input asp-for="PocetakJeftinogVremena" type="hidden" />
+            <input asp-for="PocetakRadnogVremena" type="hidden" />
+            <input asp-for="KrajJeftinogVremena" type="hidden" />
+            <input asp-for="KrajRadnogVremena" type="hidden" />
+            <input asp-for="Cijena" type="hidden" />
+            <input id="sifra" value=@data type="hidden" />
+            <div class="float-container">
+                <div class="float-child3">
+                    <label style="font-size:15px">Stara šifra:</label>
+                </div>
+                <div class="float-child1">
+                    <input id="staraSifra" class="form-control" type="password">
+                </div>
+                <div class="float-child2">
+                    <i class="far fa-eye" id="togglePasswordStara" style="margin-left: -30px; margin-top:10px; cursor: pointer;"></i>
+                </div>
+            </div>
+            <div class="float-container">
+                <div class="float-child3">
+                    <label style="font-size:15px">Nova šifra:</label>
+                </div>
+                <div class="float-child1">
+                    <input id="novaSifra" asp-for="Sifra" class="form-control" type="password" />
+                </div>
+                <div class="float-child2">
+                    <i class="far fa-eye" id="togglePasswordNova" style="margin-left: -30px; margin-top:10px; cursor: pointer;"></i>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<button style="margin-top:30px" onclick="javascript: Provjeri();">
+    <b style="font-size: 16px">Dalje</b>
+</button>
+
+
+<script type="text/javascript">
+    const togglePasswordStara = document.querySelector('#togglePasswordStara');
+    const passwordStara = document.querySelector('#staraSifra');
+
+    togglePasswordStara.addEventListener('click', function (e) {
+        const type = passwordStara.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordStara.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    const togglePasswordNova = document.querySelector('#togglePasswordNova');
+    const passwordNova = document.querySelector('#novaSifra');
+
+    togglePasswordNova.addEventListener('click', function (e) {
+        const type = passwordNova.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordNova.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    function Zatvori() {
+        document.getElementById("errorDivMjesto").className = "hidepopup"
+    }
+
+    function Provjeri() {
+
+        if (document.getElementById("sifra").value != document.getElementById("staraSifra").value) {
+            document.getElementById("errorDivMjesto").className = "showPopUp"
+
+        }
+        else {
+            document.getElementById("form-sifra").submit()
+        }
+    }
+</script>

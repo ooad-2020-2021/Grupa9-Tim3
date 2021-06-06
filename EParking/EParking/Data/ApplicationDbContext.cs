@@ -1,4 +1,5 @@
 ﻿using EParking.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,18 +8,26 @@ using System.Text;
 
 namespace EParking.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<Korisnik>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
           
         }
-        public DbSet<EParking.Models.Korisnik> Korisnik { get; set; }
+        /*public virtual DbSet<EParking.Models.AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<EParking.Models.AspNetRoleClaim> AspNetRoleClaims { get; set; }
+        public virtual DbSet<EParking.Models.AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<EParking.Models.AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<EParking.Models.AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<EParking.Models.AspNetUserRole> AspNetUserRoles { get; set; }
+        public virtual DbSet<EParking.Models.AspNetUserToken> AspNetUserTokens { get; set; }*/
+        public DbSet<EParking.Models.Parking> Parking { get; set; }
         public DbSet<EParking.Models.Mjesto> Mjesto { get; set; }
-        public DbSet<EParking.Models.RegistrovaniKorisnik> RegistrovaniKorisnik { get; set; }
+        public DbSet<EParking.Models.Korisnik> RegistrovaniKorisnik { get; set; }
         public DbSet<EParking.Models.Rezervacija> Rezervacija { get; set; }
         public DbSet<EParking.Models.AutobusMjesto> AutobusMjesto { get; set; }
+        public DbSet<EParking.Models.KombiMjesto> KombiMjesto { get; set; }
         public DbSet<EParking.Models.AutomobilMjesto> AutomobilMjesto { get; set; }
         public DbSet<EParking.Models.BicikloMjesto> BicikloMjesto { get; set; }
         public DbSet<EParking.Models.KamionMjesto> KamionMjesto { get; set; }
@@ -28,6 +37,8 @@ namespace EParking.Data
         public DbSet<EParking.Models.StalniGostMjesecnoPopust> StalniGostMjesecnoPopust { get; set; }
         public DbSet<EParking.Models.OsobaSInvaliditetomPopust> OsobaSInvaliditetomPopust { get; set; }
 
+        public DbSet<EParking.Models.IzabranaKategorijaVozila> IzabranaKategorijaVozila { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             foreach (var entity in builder.Model.GetEntityTypes())
@@ -37,6 +48,7 @@ namespace EParking.Data
                     entity.SetTableName(entity.DisplayName());
                 }
             }
+            
             /*
             builder.Entity<Korisnik>().ToTable("Korisnik");
             builder.Entity<Mjesto>().ToTable("Mjesto");

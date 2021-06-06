@@ -13,19 +13,36 @@ namespace EParking.Models
         public int ID { get; set; }
 
         private static OsobaSInvaliditetomPopust instanca = new OsobaSInvaliditetomPopust();
-        double IPopust.Iznos { get => ((IPopust)instanca).Iznos; set => ((IPopust)instanca).Iznos = value; }
+        [Required]
+        [RegularExpression(@"[0-9|,]*", ErrorMessage = "Morate unijeti broj")]
+
+        public static double iznos { get; set; }
 
         private OsobaSInvaliditetomPopust()
         {
+            iznos = 0.1;
         }
-        public OsobaSInvaliditetomPopust getInstance()
+        public static OsobaSInvaliditetomPopust getInstance()
         {
             return instanca;
         }
-        public string PrikaziGresku()
+        public double dajIznos()
         {
-            return "Nemate pravo na taj popust!";
+            return iznos;
+        }
+        public int dajKriterij()
+        {
+            return 0;
+        }
+        public void postaviIznos(double noviIznos)
+        {
+            iznos = noviIznos;
         }
         
+        public string PrikaziGresku()
+        {
+            return "Korisnik nema pravo na popust!";
+        }
+
     }
 }

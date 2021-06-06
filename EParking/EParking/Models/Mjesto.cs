@@ -13,34 +13,35 @@ namespace EParking.Models
 
         #region Properties
         [Key]
+       
         [Required]
         public int ID { get; set; }
         [Required]
+        [RegularExpression(@"[0-9]*", ErrorMessage="Morate unijeti cijeli broj")]
         public int Sprat { get; set; }
         [Required]
+        [RegularExpression(@"[0-9]*", ErrorMessage = "Morate unijeti cijeli broj")]
         public int Red { get; set; }
         [Required]
+        [RegularExpression(@"[0-9]*", ErrorMessage = "Morate unijeti cijeli broj")]
         public int Kolona { get; set; }
         [Required]
         public Boolean Zauzeto { get; set; }
         
+        [Required]
+        public string Discriminator { get; set; }
+        [Required]
+        public int ParkingId { get; set; }
         #endregion
+
         
-
         #region Metode
-        public int generisiID()
-        {
-            return zadnjiID++;
-        }
 
-        virtual public double dajCijena()
-        {
-            throw new NotImplementedException();
-        }
-        virtual public void postaviCijena(double cijena)
-        {
-            throw new NotImplementedException();
-        }
+
+        abstract public double dajCijena(double cijena);
+
+        
+        
 
         #endregion
     }

@@ -1,0 +1,75 @@
+﻿@model EParking.Models.Parking
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Dodavanje novog parkinga</h1>
+
+<h4>Parking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Naziv" class="control-label"></label>
+                <input asp-for="Naziv" class="form-control" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocetakRadnogVremena" class="control-label"></label>
+                <input asp-for="PocetakRadnogVremena" class="form-control" />
+                <span asp-validation-for="PocetakRadnogVremena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KrajRadnogVremena" class="control-label"></label>
+                <input asp-for="KrajRadnogVremena" class="form-control" />
+                <span asp-validation-for="KrajRadnogVremena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocetakJeftinogVremena" class="control-label"></label>
+                <input asp-for="PocetakJeftinogVremena" class="form-control" />
+                <span asp-validation-for="PocetakJeftinogVremena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KrajJeftinogVremena" class="control-label"></label>
+                <input asp-for="KrajJeftinogVremena" class="form-control" />
+                <span asp-validation-for="KrajJeftinogVremena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sifra" class="control-label"></label>
+                <input asp-for="Sifra" class="form-control" />
+                <span asp-validation-for="Sifra" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="OdobrenSGMjesecno" /> @Html.DisplayNameFor(model => model.OdobrenSGMjesecno)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="OdobrenSGUzastopno" /> @Html.DisplayNameFor(model => model.OdobrenSGUzastopno)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="OdobrenOSInvaliditetom" /> @Html.DisplayNameFor(model => model.OdobrenOSInvaliditetom)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cijena" class="control-label"></label>
+                <input asp-for="Cijena" class="form-control" />
+                <span asp-validation-for="Cijena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

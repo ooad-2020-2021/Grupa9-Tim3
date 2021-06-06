@@ -9,215 +9,114 @@ using EParking.Data;
 using EParking.Models;
 using System.Net.Http;
 using System.Net;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace EParking.Controllers
 {
-    public enum Popust
-    {
-        StalniGostUzastopno = 10,
-        StalniGostMjesecno = 15,
-        OsobaSInvaliditetom = 40,
-        PopustIgrica = 15
-    }
+    
 
     public class RezervacijasController : Controller
     {
+       
         private readonly ApplicationDbContext _context;
-        /*
-        static List<Mjesto> mjesta = new List<Mjesto>()
-        {
-            new Mjesto(1,1,1,false,KategorijaVozila.Automobil),
-            new Mjesto(3,2,1,true,KategorijaVozila.Kamion),
-            new Mjesto(1,4,3,false,KategorijaVozila.Kombi),
-            new Mjesto(2,1,3,true,KategorijaVozila.Kamion)
-        };
-
-        static RegistrovaniKorisnik korisnik = new RegistrovaniKorisnik("Muharem Kapo", "muharemkapo@yahoo.com", "Musija",100, 20);
-        */
-        public RezervacijasController(ApplicationDbContext context)
+        private readonly UserManager<Korisnik> _userManager;
+        
+        public RezervacijasController(ApplicationDbContext context, UserManager<Korisnik> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         
-        
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Rezervisanje(int id, string kategorija)
         {
-            //IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
-
-            //return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (null,mjesta));
+            IEnumerable<Mjesto> mjesta = (IEnumerable<Mjesto>)await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id) && mjesto.Discriminator.Equals(kategorija + "Mjesto")).ToListAsync();
+            ViewBag.mjesta = mjesta;
             return View();
+
         }
-       
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Index([Bind("ID,KorisnikID,MjestoID,VrijemeIsteka,VrijemePocetka")] Rezervacija rezervacija)
+        public async Task<IActionResult> Rezervisanje(int id, string kategorija, [Bind("ID,KorisnikID,MjestoID,VrijemePocetka,VrijemeIsteka")] Rezervacija rezervacija)
         {
-            // IEnumerable<Mjesto> mjesta = _context.Mjesto.Where(mjesto => mjesto.Zauzeto.Equals(false)).ToList();
+            IEnumerable<Mjesto> mjesta = (IEnumerable<Mjesto>)await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id) && mjesto.Discriminator.Equals(kategorija + "Mjesto")).ToListAsync();
+            ViewBag.mjesta = mjesta;
             if (ModelState.IsValid)
             {
-        
+                OsobaSInvaliditetomPopust osobaSInvaliditetomPopust = OsobaSInvaliditetomPopust.getInstance();
+                StalniGostMjesecnoPopust stalniGostMjesecnoPopust= StalniGostMjesecnoPopust.getInstance();
+                StalniGostUzastopnoPopust stalniGostUzastopnoPopust = StalniGostUzastopnoPopust.getInstance();
+
+                var user = await _userManager.GetUserAsync(User);
+                var trenutniKorisnik = await _context.Users.FirstOrDefaultAsync(usercic => usercic.UserName.Equals(user.UserName));
+
+                Mjesto mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
+                mjesto.Zauzeto = true;
+                
+
+                Parking parking = await _context.Parking.FindAsync(mjesto.ParkingId);
+                rezervacija.Cijena = mjesto.dajCijena(parking.Cijena);
+                if (stalniGostMjesecnoPopust.dajKriterij() < trenutniKorisnik.ProvedenoVrijeme)
+                {
+                    rezervacija.Cijena = rezervacija.Cijena - stalniGostMjesecnoPopust.dajIznos()* rezervacija.Cijena;
+                }
+                if (stalniGostUzastopnoPopust.dajKriterij() < trenutniKorisnik.UzastopnoVrijeme)
+                {
+                    rezervacija.Cijena = rezervacija.Cijena - stalniGostUzastopnoPopust.dajIznos()* rezervacija.Cijena;
+                }
+                if (trenutniKorisnik.Invaliditet)
+                {
+                    rezervacija.Cijena = rezervacija.Cijena - osobaSInvaliditetomPopust.dajIznos()* rezervacija.Cijena;
+                }
+                
+                if (parking.PocetakJeftinogVremena != new TimeSpan(0,0,0) && parking.KrajJeftinogVremena != new TimeSpan(0, 0, 0))
+                {
+                    if (rezervacija.VrijemePocetka.TimeOfDay > parking.PocetakJeftinogVremena && rezervacija.VrijemeIsteka.TimeOfDay < parking.KrajJeftinogVremena)
+                    {
+                        rezervacija.Cijena = rezervacija.Cijena - 0.1 * rezervacija.Cijena;
+                    }
+                }
+                rezervacija.KorisnikID = trenutniKorisnik.Id;
+                List<Rezervacija> rezervacije = await _context.Rezervacija.ToListAsync();
+                if (rezervacije.Count > 0)
+                {
+                    rezervacija.ID = rezervacije[rezervacije.Count - 1].ID + 1;
+                }
                 _context.Add(rezervacija);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            //return View(new Tuple<Rezervacija, IEnumerable<Mjesto>> (rezervacija,mjesta));
-            return View();
-        }
-
-        /*[HttpPost]
-        public HttpResponseMessage provjeriKorisnika(string popust)
-        {/*
-            if (popust.Equals("StalniGostMjesecno"))
-            {
-
-            }
-            if (popust.Equals("StalniGostUzastopno"))
-            {
-
-            }
-            if (popust.Equals("OsobaSInvaliditetom") && korisnik.Invaliditet)
-            {
+                _context.Update(mjesto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Pocetna");
+                
                 
             }
-            var response = new HttpResponseMessage(HttpStatusCode.Created);
-            if (!korisnik.addPopust(popust))
-            {
-                response.Content = new StringContent("Korisnik nema pravo na taj popust");
-            }
-            else {
-                response.Content = new StringContent("Korisnik ima pravo na taj popust");
-            }
-
-            response.Headers.Location =      
-                new Uri(Url.Link("DefaultApi", new { action = "status" }));
-            return response;
+            return View(rezervacija);
 
         }
-         */
-        // GET: Rezervacijas
-        /*public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> KategorijaVozila()
         {
-            return View(await _context.Rezervacija.ToListAsync());
-        }*/
-        /*       public Task<IActionResult> izaberiKategoriju()
-               {
-
-                   return View();
-               } 
-               public Task<IActionResult> potvrdiRezervaciju()
-               {
-
-               }
-               public async Task<IActionResult> zavrsiRezervaciju()
-               {
-
-               }
-               public void obavijestiKorisnika()
-               {
-
-               } 
-               public Task<IActionResult> odaberiPopust()
-               {
-
-               }
-               public void provjeriKorisnikovoStanje()
-               {
-
-               }
-               //public async Task<IActionResult> pokreniIgricu() { }
-       */
-
-
-
-
-
-
-
-
-
+            IzabranaKategorijaVozila vozilica = await _context.IzabranaKategorijaVozila.FindAsync(1);
+            return View(vozilica);
+        }
+        [HttpPost]
         
-
-        // GET: Rezervacijas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> KategorijaVozila([Bind("ID,Vozilo")] IzabranaKategorijaVozila odabranoVozilo)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var rezervacija = await _context.Rezervacija
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (rezervacija == null)
-            {
-                return NotFound();
-            }
-
-            return View(rezervacija);
-        }
-
-        // GET: Rezervacijas/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Rezervacijas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,VrijemeIsteka")] Rezervacija rezervacija)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(rezervacija);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(rezervacija);
-        }
-
-        // GET: Rezervacijas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var rezervacija = await _context.Rezervacija.FindAsync(id);
-            if (rezervacija == null)
-            {
-                return NotFound();
-            }
-            return View(rezervacija);
-        }
-/*
-        // POST: Rezervacijas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,VrijemeIsteka")] Rezervacija rezervacija)
-        {
-            if (id != rezervacija.ID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(rezervacija);
+                    _context.Update(odabranoVozilo);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RezervacijaExists(rezervacija.ID))
+                    if (!IzabranaKategorijaVozilaExists(odabranoVozilo.ID))
                     {
                         return NotFound();
                     }
@@ -225,13 +124,36 @@ namespace EParking.Controllers
                     {
                         throw;
                     }
+                    
                 }
-                return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction("OdabirParkinga",new { id = odabranoVozilo.ID});
             }
-            return View(rezervacija);
+            return View(odabranoVozilo);
         }
-
-        // GET: Rezervacijas/Delete/5
+        public async Task<IActionResult> OdabirParkinga(int id)
+        {
+            IzabranaKategorijaVozila odabranovoziloKlase = await _context.IzabranaKategorijaVozila.FindAsync(id);
+            List<Parking> parkinzi = await _context.Parking.ToListAsync();
+            List<Parking> odabraniParkinzi = new List<Parking>();
+            List<Mjesto> svaMjesta = await _context.Mjesto.Where(mjesto => mjesto.Discriminator.Equals(odabranovoziloKlase.Vozilo + "Mjesto") && mjesto.Zauzeto==false).ToListAsync();
+            
+            foreach(Parking parking in parkinzi)
+            {
+               if(svaMjesta.Find(mjesto => mjesto.ParkingId.Equals(parking.ID))!=null)
+               {
+                    odabraniParkinzi.Add(parking);
+               }
+            }
+            string poruka = "";
+            if (odabraniParkinzi.Count == 0)
+            {
+                poruka = "Nema pakringa sa slobodnim mjestom za vašu vrstu vozila";
+            }
+            ViewBag.poruka = poruka;
+            ViewBag.kategorija = odabranovoziloKlase.Vozilo;
+            return View(odabraniParkinzi);
+        }
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -249,20 +171,25 @@ namespace EParking.Controllers
             return View(rezervacija);
         }
 
-        // POST: Rezervacijas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
+
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var rezervacija = await _context.Rezervacija.FindAsync(id);
+            var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
+            mjesto.Zauzeto = false;
+            _context.Update(mjesto);
             _context.Rezervacija.Remove(rezervacija);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Pocetna");
         }
 
-        private bool RezervacijaExists(int id)
+
+        private bool IzabranaKategorijaVozilaExists(int id)
         {
-            return _context.Rezervacija.Any(e => e.ID == id);
-        }*/
+            return _context.IzabranaKategorijaVozila.Any(e => e.ID == id);
+        }
     }
 }
