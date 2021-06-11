@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "PrikazRezervacija";
+    var rezervacije = ViewBag.rezervacije;
+}
+<h1>Vaše rezervacije</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID mjesta
+            </th>
+            <th>
+                Početak
+            </th>
+            <th>
+                Kraj
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in rezervacije)
+        {
+            <tr>
+                <td>
+                    @item.MjestoID
+                </td>
+                <td>
+                    @item.VrijemePocetka
+                </td>
+
+                <td>
+                    @item.VrijemeIsteka
+                </td>
+
+
+                <td>
+
+                    <a asp-area="" asp-controller="Rezervacijas" asp-action="Delete" asp-route-id="@item.ID">Izbriši</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

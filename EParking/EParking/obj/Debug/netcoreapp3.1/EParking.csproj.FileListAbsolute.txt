@@ -67,7 +67,6 @@ C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\EParking.p
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\EParking.genruntimeconfig.cache
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
 C:\Users\muhar\source\repos\EParking\EParking\bin\Debug\netcoreapp3.1\MySql.Data.dll
-C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Create.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Delete.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Details.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\Edit.cshtml.g.cs
@@ -394,3 +393,5 @@ C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\View
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\AdministracijaUser\Index.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Administracija\Index.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\AdministracijaUser\Delete.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\PrikazRezervacija.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\OdaberiMjesto.cshtml.g.cs

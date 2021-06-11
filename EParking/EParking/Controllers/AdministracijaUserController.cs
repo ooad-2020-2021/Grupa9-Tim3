@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EParking.Data;
 using EParking.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EParking.Controllers
 {
@@ -19,12 +20,12 @@ namespace EParking.Controllers
             _context = context;
         }
 
-        // GET: Administracija
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
         }
-
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
@@ -44,6 +45,7 @@ namespace EParking.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var korisnik = await _context.Users.FindAsync(id);

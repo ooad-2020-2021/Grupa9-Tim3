@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EParking.Data;
 using EParking.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EParking.Controllers
 {
@@ -19,13 +20,13 @@ namespace EParking.Controllers
             _context = context;
         }
 
-        // GET: Administracija
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Parking.ToListAsync());
         }
 
-        // GET: Administracija/Details/5
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,11 +50,10 @@ namespace EParking.Controllers
             return View();
         }
 
-        // POST: Administracija/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Create([Bind("ID,Naziv,PocetakRadnogVremena,KrajRadnogVremena,PocetakJeftinogVremena,KrajJeftinogVremena,Sifra,OdobrenSGMjesecno,OdobrenSGUzastopno,OdobrenOSInvaliditetom,Cijena")] Parking parking)
         {
             if (ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace EParking.Controllers
             return View(parking);
         }
 
-        // GET: Administracija/Edit/5
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,6 +91,7 @@ namespace EParking.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Naziv,PocetakRadnogVremena,KrajRadnogVremena,PocetakJeftinogVremena,KrajJeftinogVremena,Sifra,OdobrenSGMjesecno,OdobrenSGUzastopno,OdobrenOSInvaliditetom,Cijena")] Parking parking)
         {
             if (id != parking.ID)
@@ -121,7 +122,7 @@ namespace EParking.Controllers
             return View(parking);
         }
 
-        // GET: Administracija/Delete/5
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,6 +143,7 @@ namespace EParking.Controllers
         // POST: Administracija/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var parking = await _context.Parking.FindAsync(id);

@@ -6,20 +6,22 @@
 
 <style>
 
-    button {
+    .buttonclass {
         display: inline-block;
         background-color: mediumaquamarine;
         border-radius: 10px;
         border: 4px double #cccccc;
         color: black;
         text-align: center;
-        font-size: 12px;
+        font-size: 15px;
         -webkit-transition: all 0.5s;
         -moz-transition: all 0.5s;
         -o-transition: all 0.5s;
         transition: all 0.5s;
         cursor: pointer;
+        width: 200px
     }
+
 
 
 
@@ -114,17 +116,20 @@
 <form asp-action="KategorijaVozila" formmethod="post">
     <input type="hidden" asp-for="ID" />
     <div style="margin-top:50px">
-        <input asp-for="Vozilo" id="vozilo" />
+        <input asp-for="Vozilo" id="vozilo" readonly/>
     </div>
 
     <div style="margin-top:30px">
-        <input type="submit" value="Dalje" class="btn btn-primary" />
+        <input type="submit" value="Dalje" class="buttonclass" />
     </div>
 </form>
 
 
 <script type="text/javascript">
+        
+   
     function HidePopup(ime) {
         document.getElementById("vozilo").value = ime
     }
+    
 </script>

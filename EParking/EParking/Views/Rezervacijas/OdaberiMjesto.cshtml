@@ -1,0 +1,57 @@
+﻿
+@{
+    var data = ViewBag.mjesta;
+}
+<h1>Odaberite mjesto</h1>
+<table style="margin-top:30px" class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Sprat
+            </th>
+            <th>
+                Red
+            </th>
+            <th>
+                Kolona
+            </th>
+            <th>
+                Vrsta
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in data)
+        {
+            <tr>
+                <td>
+                    @item.ID
+                </td>
+                <td>
+                    @item.Sprat
+                </td>
+                <td>
+                    @item.Red
+                </td>
+                <td>
+                    @item.Kolona
+                </td>
+                <td>
+                    @item.Discriminator
+                </td>
+                <td>
+
+                 
+                        <a asp-action="Rezervisanje" asp-route-id="@item.ParkingId" 
+                           asp-route-kategorija="@item.Discriminator" asp-route-mjestoId="@item.ID"> Izaberi</a>
+                    
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

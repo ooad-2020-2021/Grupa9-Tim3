@@ -2,8 +2,14 @@
 @{
     ViewBag.Title = "Rezervisanje";
 }
-@{ 
-    var data = ViewBag.mjesta;
+@{
+    var data = ViewBag.rezervacije;
+    var poruka = ViewBag.poruka;
+    var pocetakRV = ViewBag.pocetakRadnogVremena;
+    var krajRV = ViewBag.krajRadnogVremena;
+    var pocetakJV = ViewBag.pocetakJeftinogVremena;
+    var krajJV = ViewBag.krajJeftinogVremena;
+
 }
 <style>
     table {
@@ -135,108 +141,91 @@
 </style>
 
 
-<div id="errorDivMjesto" style="width:250px;height:200px;border-color:blue;border-style:solid" align="center" class="hidepopup">
-    <p><b>Greška</b></p>
-    <hr />
-    <p>Pogrešan ID mjesta!</p>
-    <button class="button-corner" onclick="javascript: Zatvori();"> <b>Zatvori</b></button>
-</div>
-<div id="errorDivVrijeme" style="width:250px;height:200px;border-color:blue;border-style:solid" align="center" class="hidepopup">
-    <p><b>Greška</b></p>
-    <hr />
-    <p>Vrijeme početka mora biti prije vremena kraja!</p>
-    <button class="button-corner" onclick="javascript: Zatvori();"> <b>Zatvori</b></button>
-</div>
 
 <h1 style="padding-bottom:50px">Rezervacija</h1>
 
-    
+<div style="        margin-top: 15px;
+        padding:15px;
+        width: 600px;
+        height: 100px;
+        background-color: mediumaquamarine;
+        border: double;
+        border-color: darkgreen">
+    <p style="font-size:15px"><b>Radno vrijeme: @pocetakRV - @krajRV</b></p>
+    <p style="font-size:15px"><b>Jeftino vrijeme:  @pocetakJV  -  @krajJV </b>&nbsp&nbsp<i style="font-size:17px ; color:forestgreen"> <b>Vrijeme s popustom!!!</b></i></p>
+</div>
 
-<div>
-    <table id="tabelaMjesta">
-        <thead>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Sprat
-                </th>
-                <th>
-                    Red
-                </th>
-                <th>
-                    Kolona
-                </th>
-                <th>
-                    Vrsta
-                </th>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in data)
-            {
+    <div style="margin-top:30px">
+        <table id="tabelaVremena">
+            <thead>
                 <tr>
-                    <td name="sprat">
-                        @item.ID
-                    </td>
-                    <td name="sprat">
-                        @item.Sprat
-                    </td>
-                    <td name="red">
-                        @item.Red
-                    </td>
-                    <td name="kolona">
-                        @item.Kolona
-                    </td>
-                    <td>
-                        @item.Discriminator
-                    </td>
+                    
+                    <th>
+                        VrijemePocetka
+                    </th>
+                    <th>
+                        VrijemeIsteka
+                    </th>
 
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in data)
+                {
+                    <tr>
+                        <td>
+                            @item.VrijemePocetka
+                        </td>
+                        <td>
+                            @item.VrijemeIsteka
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
 
 
-</div>
-   
-<form asp-action="Rezervisanje" id="form-rezervacija">
-
-
-    <div style="padding-top:150px">
-        <b style="padding-right:10px ; font-size:17px">Mjesto: </b>
-        <input asp-for="KorisnikID" value="1" type="hidden" />
-        <input asp-for="MjestoID" id="rednibroj" min="0">
-
-        <i style="padding-left:20px ; font-size:12px">*Napomena: Unesite ID mjesta </i>
-        <hr />
+    </div>
+    
+    <div style="padding-top:75px">
+        <p style="font-size:18px; color:red">@poruka</p>
     </div>
 
+    <form asp-action="Rezervisanje" id="form-rezervacija">
+       
+        @if (User.IsInRole("Zaposlenik") || User.IsInRole("Administrator")) {
+            Html.BeginForm();
+                <b>Zaposlenička rezervacija?</b>
+                @Html.CheckBox("zaposlenikRezervacija")                 
+            
+        }
+            <input asp-for="KorisnikID" value="1" type="hidden" />
+            <input asp-for="MjestoID" type="hidden">
 
-    <div>
-        <p style="font-size:17px"><b>Vrijeme rezervacije: </b></p>
-        <label class="vrijemeLabela">Vrijeme pocetka rezervacije: </label>
-        <div class="vrijeme">
-            <input id="pocetak" asp-for="VrijemePocetka" asp-format="{0:dd/MM/yyyy HH:mm}" />
-            <span asp-validation-for="VrijemePocetka" class="text-danger"></span>
+        <div style="padding-top:75px">
+            <p style="font-size:17px"><b>Vrijeme rezervacije: </b></p>
+            <label class="vrijemeLabela">Vrijeme pocetka rezervacije: </label>
+            <div class="vrijeme">
+                <input id="pocetak" asp-for="VrijemePocetka" asp-format="{0:dd/MM/yyyy HH:mm}" />
+                <span asp-validation-for="VrijemePocetka" class="text-danger"></span>
+            </div>
+            <label style="margin-top:20px" class="vrijemeLabela">Vrijeme završetka rezervacije: </label>
+
+            <div class="vrijeme">
+                <input id="kraj" asp-for="VrijemeIsteka" asp-format="{0:dd/MM/yyyy HH:mm}" />
+                <span asp-validation-for="VrijemeIsteka" class="text-danger"></span>
+            </div>
         </div>
-        <label style="margin-top:20px" class="vrijemeLabela">Vrijeme završetka rezervacije: </label>
 
-        <div class="vrijeme">
-            <input id="kraj" asp-for="VrijemeIsteka" asp-format="{0:dd/MM/yyyy HH:mm}" />
-            <span asp-validation-for="VrijemeIsteka" class="text-danger"></span>
+        <div style="margin-top:50px">
+            <button type="button" onClick="javascript: Provjera();" class="buttonclass"><b>Završi rezervaciju</b></button>
         </div>
-    </div>
-
-    <div style="margin-top:50px">
-        <button type="button" onClick="javascript: Provjera();" class="buttonclass"><b>Završi rezervaciju</b></button>
-    </div>
 
 
 
-</form>
+    </form>
 
 <script type="text/javascript">
 
@@ -248,31 +237,7 @@
     }
 
     function Provjera() {
-
-        var rednibroj = document.getElementById("rednibroj").value
-        var tabela = document.getElementById("tabelaMjesta")
-        var postojiRed = false;
-        var redovi = tabela.rows;
-
-        for (var i = 1; i < redovi.length; i++) {
-            if (parseInt(redovi[i].cells[0].innerHTML, 10) == rednibroj) {
-                postojiRed = true;
-            }
-        }
-        
-            
-        
-        var pocetak = document.getElementById("pocetak").value;
-        var kraj = document.getElementById("kraj").value;
-        if (!postojiRed) {
-            document.getElementById("errorDivMjesto").className = "showPopUp"
-        }
-        else if(pocetak>kraj) { 
-           document.getElementById("errorDivVrijeme").className = "showPopUp"
-        }
-        else {
-            document.getElementById("form-rezervacija").submit();
-        }
+        document.getElementById("form-rezervacija").submit();
 
     }
 

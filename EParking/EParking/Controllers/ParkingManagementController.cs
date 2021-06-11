@@ -22,21 +22,22 @@ namespace EParking.Controllers
         }
         //[Authorize(Roles="Administrator")]
 
-        
-        
 
+
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> OdaberiParking()
         {
             IEnumerable<Parking> parkinzi = await _context.Parking.ToListAsync();
             return View(parkinzi);
         }
-        
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> UnesiSifru(int id)
         {
             Parking parking = await _context.Parking.FindAsync(id);
             return View(parking);
         }
         [HttpPost]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> UnesiSifru(int id, [Bind("ID,Naziv,PocetakRadnogVremena,KrajRadnogVremena,PocetakJeftinogVremena,KrajJeftinogVremena,Sifra,OdobrenSGMjesecno,OdobrenSGUzastopno,OdobrenOSInvaliditetom,Cijena")] Parking parking)
         {
             if (id != parking.ID)
@@ -49,23 +50,42 @@ namespace EParking.Controllers
 
         }
 
-        
 
 
 
-        // GET: HomeController1
-        //[Authorize(Roles = "Administrator")]
+
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Index(int id)
         {
             Parking parking = await _context.Parking.FindAsync(id);
             List<Mjesto> mjesta = await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id)).ToListAsync();
             List<Rezervacija> rezervacije = await _context.Rezervacija.ToListAsync();
-            List<Rezervacija> izabraneRezervacije = rezervacije.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToList();
+            List<Rezervacija> krajnjeRezervacije = new List<Rezervacija>();
+            foreach (Rezervacija rezervacija in rezervacije)
+            {
+                if (rezervacija.VrijemeIsteka < System.DateTime.Now)
+                {
+                    var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
+                    mjesto.Zauzeto = false;
+                    _context.Update(mjesto);
+                    _context.Rezervacija.Remove(rezervacija);
+                    _context.SaveChangesAsync();
+                    
+                }
+                else
+                {
+                    krajnjeRezervacije.Add(rezervacija);
+                }
+            }
+
+
+            List<Rezervacija> izabraneRezervacije = krajnjeRezervacije.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToList();
             ViewBag.mjesta = mjesta;
             ViewBag.rezervacije = izabraneRezervacije;
             return View(parking);
         }
         [HttpPost]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Index(int id, [Bind("ID,Naziv,PocetakRadnogVremena,KrajRadnogVremena,PocetakJeftinogVremena,KrajJeftinogVremena,Sifra,OdobrenSGMjesecno,OdobrenSGUzastopno,OdobrenOSInvaliditetom,Cijena")] Parking parking)
         {
             if (id != parking.ID)
@@ -85,7 +105,7 @@ namespace EParking.Controllers
             ViewBag.rezervacije = rezervacije;
             return View(parking);
         }
-
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> PromijeniSifru(int id)
         {
             Parking parking = await _context.Parking.FindAsync(id);
@@ -94,6 +114,7 @@ namespace EParking.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> PromijeniSifru(int id, [Bind("ID,Naziv,PocetakRadnogVremena,KrajRadnogVremena,PocetakJeftinogVremena,KrajJeftinogVremena,Sifra,OdobrenSGMjesecno,OdobrenSGUzastopno,OdobrenOSInvaliditetom,Cijena")] Parking parking)
         {
             
@@ -130,7 +151,7 @@ namespace EParking.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> DodajMjesto(int id, [Bind("ID,Sprat,Red,Kolona,Zauzeto,Discriminator,ParkingId")] AutomobilMjesto mjesto)
         {
 
@@ -165,7 +186,7 @@ namespace EParking.Controllers
             ViewBag.parking = id;
             return View(mjesto);
         }
-
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> IzbrisiMjesto(int? id)
         {
             if (id == null)
@@ -186,6 +207,7 @@ namespace EParking.Controllers
         // POST: Rezervacijas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> IzbrisiMjesto(int id)
         {
             var mjesto = await _context.Mjesto.FindAsync(id);
