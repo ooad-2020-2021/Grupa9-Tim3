@@ -17,7 +17,7 @@
         background-position: center;
     "class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div  class="container">
-                <a style="margin-left:-30px; margin-right:30px; font-size:26px; margin-bottom:5px; color:black; text-shadow:1px 2px 2px lightgray;" asp-area="" asp-controller="Pocetna" asp-action="Index"><b>Početna</b></a>
+                <a style="margin-left:-30px; margin-right:30px; font-size:26px; margin-bottom:5px; color:black; text-shadow:1px 2px 2px lightgray; text-decoration:none;" asp-area="" asp-controller="Pocetna" asp-action="Index"><b>Početna</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,17 +28,17 @@
                     @if (User.Identity.IsAuthenticated)
                        {
                             <li class="nav-item">
-                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:15px;" asp-area="" asp-controller="Rezervacijas" asp-action="KategorijaVozila"><b>Rezervacija</b></a>
+                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:15px; text-decoration:none;" asp-area="" asp-controller="Rezervacijas" asp-action="KategorijaVozila"><b>Rezervacija</b></a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px;" asp-area="" asp-controller="ParkingManagement" asp-action="OdaberiParking"><b>Upravljanje parkingom</b></a>
+                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px; text-decoration:none;" asp-area="" asp-controller="ParkingManagement" asp-action="OdaberiParking"><b>Upravljanje parkingom</b></a>
                             </li>
 
 
                             @if (User.IsInRole("Administrator"))
                             {
                                 <li class="nav-item">
-                                    <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px;" asp-area="" asp-controller="Administracija" asp-action="Index"><b>Administracija</b></a>
+                                    <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px; text-decoration:none;" asp-area="" asp-controller="Administracija" asp-action="Index"><b>Administracija</b></a>
                                 </li>
                             }
                         }
