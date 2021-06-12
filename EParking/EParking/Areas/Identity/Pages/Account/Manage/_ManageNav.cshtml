@@ -1,0 +1,33 @@
+﻿@inject SignInManager<EParking.Models.Korisnik> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<style>
+    li {
+        margin-top: 10px;
+    }
+
+    ul {
+        
+        list-style-type: none;
+    }
+    a {
+        font-size: 18px;
+        color:darkslategray;
+    }
+
+    ul#navigation li a:hover {
+        margin-left: -10px;
+        padding-left: 10px;
+        color: white;
+        font-weight: bold;
+        width: 100%;
+    }
+</style>
+<ul id="navigation">
+    <li><a id="profile" style="text-decoration: none;" asp-page ="./Index"><b>Račun</b></a></li>
+    <li><a id="email" style="text-decoration: none;" asp-page="./Email"><b>Email</b></a></li>
+    <li><a id="change-password" style="text-decoration: none;" asp-page="./ChangePassword"><b>Password</b></a></li>
+    
+    
+</ul>

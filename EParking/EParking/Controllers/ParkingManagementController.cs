@@ -66,7 +66,11 @@ namespace EParking.Controllers
                 if (rezervacija.VrijemeIsteka < System.DateTime.Now)
                 {
                     var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
-                    mjesto.Zauzeto = false;
+                    List<Rezervacija> rezervacijeMjesta = await _context.Rezervacija.Where(rezervacija => rezervacija.MjestoID.Equals(id)).ToListAsync();
+                    if (rezervacijeMjesta.Count == 1)
+                    {
+                        mjesto.Zauzeto = false;
+                    }
                     _context.Update(mjesto);
                     _context.Rezervacija.Remove(rezervacija);
                     _context.SaveChangesAsync();
@@ -78,8 +82,14 @@ namespace EParking.Controllers
                 }
             }
 
+            List<Rezervacija> izabraneRezervacije = new List<Rezervacija>();
+            try
+            {
+                izabraneRezervacije = krajnjeRezervacije.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToList();
+            }
+            catch (InvalidOperationException e){
 
-            List<Rezervacija> izabraneRezervacije = krajnjeRezervacije.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToList();
+            }
             ViewBag.mjesta = mjesta;
             ViewBag.rezervacije = izabraneRezervacije;
             return View(parking);
@@ -100,7 +110,8 @@ namespace EParking.Controllers
                 return RedirectToAction("Index","Pocetna");
             }
             List<Mjesto> mjesta = await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id)).ToListAsync();
-            List<Rezervacija> rezervacije = await _context.Rezervacija.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID)!=null).ToListAsync();
+            IEnumerable<Rezervacija> rezervacije = await _context.Rezervacija.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID)!=null).ToListAsync();
+            
             ViewBag.mjesta = mjesta;
             ViewBag.rezervacije = rezervacije;
             return View(parking);

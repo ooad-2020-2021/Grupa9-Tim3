@@ -6,24 +6,24 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Postavke računa</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><b>Postavke računa</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Rezervacijas" asp-action="PrikazRezervacija">Moje rezervacije</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Rezervacijas" asp-action="PrikazRezervacija"><b>Moje rezervacije</b></a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Pocetna", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" class="nav-link btn btn-link text-dark"><b style="margin-left:30px; margin-right:-30px; font-size:20px; color:red">Logout</b></button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registracija</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register"><b style="margin-left:30px; margin-right:-30px; font-size:20px; color:red">Registracija</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><b style="margin-left:30px; margin-right:-30px; font-size:20px; color:red">Login</b></a>
         </li>
 
     }

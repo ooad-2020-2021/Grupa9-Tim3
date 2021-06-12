@@ -1,8 +1,45 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .blockWrap {
+        display: block;
+        width: 100%;
+        
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    .blockCol {
+        border: dashed;
+        border-color: black;
+        float: left;
+        display: inline-block;
+        width: 50%;
+        height: 900px;
+        text-align: center;
+        background-color: lightgrey;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden
+    }
+    .fillimg {
+        
+        min-width: 50%;
+        min-height: 100%
+    }
+
+    
+
+</style>
+
+<div class="blockWrap">
+    <div class="blockCol" style="background-image: url('https://www.trianglebiofuels.com/wp-content/uploads/2015/03/Gray-Background.png');
+        
+        background-attachment: fixed;
+        background-position: center;
+">
+        <h1 class="display-4" style="font-family:Brush Script MT,cursive; color:white; margin-top:250px;">EParking</h1>
+    </div>
+    <div class="blockCol">
+        <img class="fillimg" src="https://images.pexels.com/photos/938580/pexels-photo-938580.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"/>
+    </div>
 </div>

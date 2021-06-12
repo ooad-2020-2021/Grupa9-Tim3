@@ -23,7 +23,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Naziv)
+                        <b>@Html.DisplayFor(modelItem => item.Naziv)</b>
                     </td>
                     <td>
                         <a asp-action="OdaberiMjesto" asp-route-id="@item.ID" asp-route-kategorija="@kategorija">Odaberi</a>

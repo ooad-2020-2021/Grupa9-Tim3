@@ -4,6 +4,23 @@
     ViewData["Title"] = "Create";
 }
 
+<style>
+    .buttonclass {
+        display: inline-block;
+        background-color: lightslategray;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: black;
+        text-align: center;
+        font-size: 12px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+</style>
+
 <h1>Dodavanje novog parkinga</h1>
 
 <h4>Parking</h4>
@@ -63,7 +80,7 @@
                 <span asp-validation-for="Cijena" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="buttonclass" />
             </div>
         </form>
     </div>

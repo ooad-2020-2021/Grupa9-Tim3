@@ -7,11 +7,17 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body style="background-image: url('https://2.bp.blogspot.com/-k7y6-QHTsuk/UAyRqDwPaSI/AAAAAAAAEcI/14PEswHwp7A/s1600/More+Tumblr+Backgrounds+for+guys+light+gray.jpg');
+        background-attachment: fixed;
+        background-position: center;
+">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Pocetna" asp-action="Index">Početna</a>
+        <nav style="background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/04/grey-wallpaper-hd-download-free-grey-background-.jpg');
+        background-attachment: fixed;
+        background-position: center;
+    "class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div  class="container">
+                <a style="margin-left:-30px; margin-right:30px; font-size:26px; margin-bottom:5px; color:black; text-shadow:1px 2px 2px lightgray;" asp-area="" asp-controller="Pocetna" asp-action="Index"><b>Početna</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,17 +28,17 @@
                     @if (User.Identity.IsAuthenticated)
                        {
                             <li class="nav-item">
-                                <a class="nav-link text-black-50" asp-area="" asp-controller="Rezervacijas" asp-action="KategorijaVozila">Rezervacija</a>
+                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:15px;" asp-area="" asp-controller="Rezervacijas" asp-action="KategorijaVozila"><b>Rezervacija</b></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-black-50" asp-area="" asp-controller="ParkingManagement" asp-action="OdaberiParking">Upravljanje parkingom</a>
+                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px;" asp-area="" asp-controller="ParkingManagement" asp-action="OdaberiParking"><b>Upravljanje parkingom</b></a>
                             </li>
 
 
                             @if (User.IsInRole("Administrator"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-black-50" asp-area="" asp-controller="Administracija" asp-action="Index">Administracija</a>
+                                    <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px;" asp-area="" asp-controller="Administracija" asp-action="Index"><b>Administracija</b></a>
                                 </li>
                             }
                         }

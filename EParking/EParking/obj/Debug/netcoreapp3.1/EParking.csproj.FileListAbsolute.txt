@@ -395,3 +395,12 @@ C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\View
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\AdministracijaUser\Delete.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\PrikazRezervacija.cshtml.g.cs
 C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Views\Rezervacijas\OdaberiMjesto.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\Email.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\SetPassword.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\_StatusMessage.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml.g.cs
+C:\Users\muhar\source\repos\EParking\EParking\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs

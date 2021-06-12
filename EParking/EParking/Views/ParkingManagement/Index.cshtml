@@ -11,7 +11,7 @@
 <style>
     button {
         display: inline-block;
-        background-color: mediumaquamarine;
+        background-color: lightslategray;
         border-radius: 10px;
         border: 4px double #cccccc;
         color: black;
@@ -66,7 +66,7 @@
 
     .button-corner {
         display: inline-block;
-        background-color: mediumaquamarine;
+        background-color: lightslategray;
         border-radius: 10px;
         border: 4px double #cccccc;
         color: black;
@@ -97,7 +97,7 @@
         border: 1px solid black;
         overflow: hidden;
         margin-left: 450px;
-        background-color: mediumaquamarine;
+        background-color: lightslategray;
         padding: 15px
     }
 </style>
@@ -106,12 +106,14 @@
 
 
 <div class="header">
-    <h1>@ViewData["Title"]</h1>
+    <h1 style="color:darkgreen">@ViewData["Title"]</h1>
     <div class="topcorner">
-        <a asp-action="PromijeniSifru" asp-route-id=@Model.ID><i style="font-size:18px; color:mediumaquamarine; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Promijeni šifru</i></a>
+        <a asp-action="PromijeniSifru" asp-route-id=@Model.ID class="but"><u style="        font-size: 21px;
+        color: black;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"><b>Promijeni šifru</b></u></a>
     </div>
     <div style="margin-top:50px">
-        <a asp-action="DodajMjesto" asp-route-id=@Model.ID><i style="font-size:18px; color:mediumaquamarine; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Dodaj novo mjesto</i></a>
+        <a asp-action="DodajMjesto" asp-route-id=@Model.ID><u style="font-size:21px; color:black; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"><b>Dodaj novo mjesto</b></u></a>
     </div>
 </div>
 
@@ -171,7 +173,7 @@
             </div>
         </div>
     </div>
-    <hr />
+   
 
     <p style="font-size:20px"><b>Popust zavisno od doba dana: </b></p>
     <div>
@@ -210,126 +212,137 @@
 <hr />
 
 <p style="margin-top:40px ; font-size:20px"><b>Mjesta na vašem parkingu</b></p>
-
-<table style="margin-top:30px" class="table">
-    <thead>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Sprat
-            </th>
-            <th>
-                Red
-            </th>
-            <th>
-                Kolona
-            </th>
-            <th>
-                Vrsta
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in data)
-        {
-            <tr>
-                <td>
-                    @item.ID
-                </td>
-                <td>
-                    @item.Sprat
-                </td>
-                <td>
-                    @item.Red
-                </td>
-                <td>
-                    @item.Kolona
-                </td>
-                <td>
-                    @item.Discriminator
-                </td>
-                <td>
-
-                    @if (item.Zauzeto.Equals(false))
-                    {
-                        <a asp-action="IzbrisiMjesto" asp-route-id="@item.ID"> Izbriši mjesto</a>
-                    }
-                    else
-                    {
-                        <i style="color:dimgray">Mjesto je zauzeto</i>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-@if (rezervacije!=null)
+@if (data.Count > 0)
 {
+    <table style="margin-top:30px" class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Sprat
+                </th>
+                <th>
+                    Red
+                </th>
+                <th>
+                    Kolona
+                </th>
+                <th>
+                    Vrsta
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in data)
+            {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        @item.Sprat
+                    </td>
+                    <td>
+                        @item.Red
+                    </td>
+                    <td>
+                        @item.Kolona
+                    </td>
+                    <td>
+                        @item.Discriminator
+                    </td>
+                    <td>
+
+                        @if (item.Zauzeto.Equals(false))
+                        {
+                            <a asp-action="IzbrisiMjesto" asp-route-id="@item.ID"> Izbriši mjesto</a>
+                        }
+                        else
+                        {
+                            <i style="color:dimgray">Mjesto je zauzeto</i>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p style="font-size:18px; color:red"><b>Nemate mjesta na parkingu</b></p>
+}
+
 <hr />
 
-<p style="margin-top:40px ; font-size:20px"><b>Rezervacije na vašem parkingu</b></p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                ID korisnika
-            </th>
-            <th>
-                ID mjesta
-            </th>
-            <th>
-                Početak
-            </th>
-            <th>
-                Kraj
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in rezervacije)
-        {
+<p style="margin-top:80px ; font-size:20px"><b>Rezervacije na vašem parkingu</b></p>
+@if (rezervacije != null && rezervacije.Count > 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @item.ID
-                </td>
-                <td>
-                    @item.KorisnikID
-                </td>
-                <td>
-                    @item.MjestoID
-                </td>
-                <td>
-                    @item.VrijemePocetka
-                </td>
+                <th>
+                    ID
+                </th>
+                <th>
+                    ID korisnika
+                </th>
+                <th>
+                    ID mjesta
+                </th>
+                <th>
+                    Početak
+                </th>
+                <th>
+                    Kraj
+                </th>
 
-                <td>
-                    @item.VrijemeIsteka
-                </td>
-
-
-                <td>
-
-                    <a asp-area="" asp-controller="Rezervacijas" asp-action="Delete" asp-route-id="@item.ID">Izbriši</a>
-                </td>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in rezervacije)
+            {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        @item.KorisnikID
+                    </td>
+                    <td>
+                        @item.MjestoID
+                    </td>
+                    <td>
+                        @item.VrijemePocetka
+                    </td>
+
+                    <td>
+                        @item.VrijemeIsteka
+                    </td>
+
+
+                    <td>
+
+                        <a asp-area="" asp-controller="Rezervacijas" asp-action="Delete" asp-route-id="@item.ID">Izbriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p style="font-size:18px; color:red"><b>Nemate rezervacija na parkingu</b></p>
+
 }
 
 
 <div style="bottom:-70px; position:relative">
     <button id="submit-btn" onclick="javascript: Submit();">
-        <b style="font-size: 16px">Spasi promjene</b>
+        <b style="font-size: 16px">Vrati se na početnu</b>
     </button>
 </div>
 

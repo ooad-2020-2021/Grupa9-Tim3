@@ -7,6 +7,23 @@
     var poruka = ViewBag.poruka;
 }
 
+<style>
+    .buttonclass {
+        display: inline-block;
+        background-color: lightslategray;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: black;
+        text-align: center;
+        font-size: 12px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+</style>
+
 <h1>Unesite novo mjesto</h1>
 <p style="font-size:15px ; color:red"><b>@poruka</b></p>
 <h4>Mjesto</h4>
@@ -44,7 +61,7 @@
                 </select>
             </div>
             <div style="margin-top:20px" class="form-group">
-                <input type="submit" value="Dodaj" class="btn btn-primary" />
+                <input type="submit" value="Dodaj" class="buttonclass" />
             </div>
         </form>
     </div>

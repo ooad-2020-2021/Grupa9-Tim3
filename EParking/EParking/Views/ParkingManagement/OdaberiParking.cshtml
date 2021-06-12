@@ -11,7 +11,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Naziv)
+                <b style="font-size:18px">@Html.DisplayNameFor(model => model.Naziv)</b>
             </th>
  
             <th></th>
@@ -22,8 +22,8 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Naziv)
-                </td>
+                    <b style="font-size:16px">@Html.DisplayFor(modelItem => item.Naziv)</b>
+</td>
                 <td>
                     <a asp-action="UnesiSifru" asp-route-id="@item.ID">Odaberi</a> 
                 </td>

@@ -53,8 +53,9 @@ namespace EParking.Controllers
         [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
         public async Task<IActionResult> Rezervisanje(int id, string kategorija, int mjestoId, [Bind("ID,KorisnikID,MjestoID,VrijemePocetka,VrijemeIsteka")] Rezervacija rezervacija, IFormCollection form)
         {
-            IEnumerable<Rezervacija> rezervacijeMjesta = (IEnumerable<Rezervacija>)await _context.Rezervacija.Where(rezervacija => rezervacija.MjestoID.Equals(mjestoId)).ToListAsync();
-            ViewBag.rezervacije = rezervacijeMjesta;
+            List<Rezervacija> sveRezervacije = await _context.Rezervacija.ToListAsync();
+            List<Rezervacija> rezervacije = await _context.Rezervacija.Where(rezervacija => rezervacija.MjestoID.Equals(mjestoId)).ToListAsync();
+            ViewBag.rezervacije = rezervacije;
             Mjesto mjesto = await _context.Mjesto.FindAsync(mjestoId);
             Parking parking = await _context.Parking.FindAsync(mjesto.ParkingId);
             ViewBag.pocetakRadnogVremena = parking.PocetakRadnogVremena.ToString();
@@ -62,33 +63,37 @@ namespace EParking.Controllers
             ViewBag.pocetakJeftinogVremena = parking.PocetakJeftinogVremena.ToString();
             ViewBag.krajJeftinogVremena = parking.KrajJeftinogVremena.ToString();
             ViewBag.poruka = "";
-            var zaposlenikRezervacija = form["zaposlenikRezervacija"];
+            bool? zaposlenikRezervacija = null;
+            if (!form["zaposlenikRezervacija"].ToString().Equals("")) {
+                zaposlenikRezervacija = Convert.ToBoolean(form["zaposlenikRezervacija"].ToString().Split(',')[0]);
+            }
             if (ModelState.IsValid)
             {
-                List<Rezervacija> rezervacije = await _context.Rezervacija.ToListAsync();
                 if (rezervacija.VrijemeIsteka < rezervacija.VrijemePocetka)
                 {
                     ViewBag.poruka = "Vrijeme početka mora biti prije vremena isteka";
                     return View(rezervacija);
                 }
 
-                foreach(Rezervacija item in rezervacije)
+                
+                foreach (Rezervacija item in rezervacije)
                 {
-                    if(!(rezervacija.VrijemePocetka>item.VrijemeIsteka || rezervacija.VrijemeIsteka < item.VrijemePocetka))
+                    if (!(rezervacija.VrijemePocetka > item.VrijemeIsteka || rezervacija.VrijemeIsteka < item.VrijemePocetka))
                     {
                         ViewBag.poruka = "Taj termin je već zauzet";
                         return View(rezervacija);
                     }
-                }
+                 }
+                
                 mjesto.Zauzeto = true;
                 rezervacija.Cijena = mjesto.dajCijena(parking.Cijena);
 
-                if (rezervacije.Count > 0)
+                if (sveRezervacije.Count > 0)
                 {
-                    rezervacija.ID = rezervacije[rezervacije.Count - 1].ID + 1;
+                    rezervacija.ID = sveRezervacije[sveRezervacije.Count - 1].ID + 1;
                 }
 
-                if (zaposlenikRezervacija == false)
+                if (zaposlenikRezervacija == null || zaposlenikRezervacija == false)
                 {
                     OsobaSInvaliditetomPopust osobaSInvaliditetomPopust = OsobaSInvaliditetomPopust.getInstance();
                     StalniGostMjesecnoPopust stalniGostMjesecnoPopust = StalniGostMjesecnoPopust.getInstance();
@@ -121,7 +126,7 @@ namespace EParking.Controllers
                     }
                     rezervacija.KorisnikID = trenutniKorisnik.Id;
                 }
-                else
+                else if(zaposlenikRezervacija==true)
                 {
                     rezervacija.KorisnikID = "ZaposlenikRezervacija" + rezervacija.ID.ToString();
                 }
@@ -178,7 +183,7 @@ namespace EParking.Controllers
             IzabranaKategorijaVozila odabranovoziloKlase = await _context.IzabranaKategorijaVozila.FindAsync(id);
             List<Parking> parkinzi = await _context.Parking.ToListAsync();
             List<Parking> odabraniParkinzi = new List<Parking>();
-            List<Mjesto> svaMjesta = await _context.Mjesto.Where(mjesto => mjesto.Discriminator.Equals(odabranovoziloKlase.Vozilo + "Mjesto") && mjesto.Zauzeto==false).ToListAsync();
+            List<Mjesto> svaMjesta = await _context.Mjesto.Where(mjesto => mjesto.Discriminator.Equals(odabranovoziloKlase.Vozilo + "Mjesto")).ToListAsync();
             
             foreach(Parking parking in parkinzi)
             {
@@ -190,7 +195,7 @@ namespace EParking.Controllers
             string poruka = "";
             if (odabraniParkinzi.Count == 0)
             {
-                poruka = "Nema pakringa sa slobodnim mjestom za vašu vrstu vozila";
+                poruka = "Nema parkinga sa mjestom za vašu vrstu vozila";
             }
             ViewBag.poruka = poruka;
             ViewBag.kategorija = odabranovoziloKlase.Vozilo;
@@ -250,7 +255,11 @@ namespace EParking.Controllers
         {
             var rezervacija = await _context.Rezervacija.FindAsync(id);
             var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
-            mjesto.Zauzeto = false;
+            List<Rezervacija> rezervacije = await _context.Rezervacija.Where(rezervacija => rezervacija.MjestoID.Equals(id)).ToListAsync();
+            if (rezervacije.Count == 1)
+            {
+                mjesto.Zauzeto = false;
+            }
             _context.Update(mjesto);
             _context.Rezervacija.Remove(rezervacija);
             await _context.SaveChangesAsync();
