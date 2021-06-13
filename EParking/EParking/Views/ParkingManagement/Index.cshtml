@@ -65,6 +65,22 @@
         display: block;
     }
 
+    .buttonclass {
+        display: inline-block;
+        background-color: lightslategray;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: black;
+        text-align: center;
+        font-size: 15px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+        width: 200px
+    }
+
     .button-corner {
         display: inline-block;
         background-color: lightslategray;
@@ -343,11 +359,17 @@ else
 
 }
 
-
 <div style="bottom:-70px; position:relative">
     <button id="submit-btn" onclick="javascript: Submit();">
-        <b style="font-size: 16px">Vrati se na početnu</b>
+        <b style="font-size: 16px">Spasi promjene</b>
     </button>
+</div>
+
+
+<div style="bottom:-100px; position:relative">
+    <a id="submit-btn1" style="text-decoration:none" asp-area="" asp-controller="Pocetna" asp-action="Index" class="buttonclass">
+        <b style="font-size: 16px">Vrati se na početnu</b>
+    </a>
 </div>
 
 

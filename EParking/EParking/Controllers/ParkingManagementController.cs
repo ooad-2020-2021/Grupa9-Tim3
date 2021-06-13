@@ -84,11 +84,12 @@ namespace EParking.Controllers
                     krajnjeRezervacije.Add(rezervacija);
                 }
             }
-
+            
             List<Rezervacija> izabraneRezervacije = new List<Rezervacija>();
             try
             {
-                izabraneRezervacije = krajnjeRezervacije.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToList();
+                izabraneRezervacije = krajnjeRezervacije.Where(rezervacija => mjesta.Find(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToList();
+                
             }
             catch (InvalidOperationException e){
 
@@ -110,7 +111,7 @@ namespace EParking.Controllers
             List<Rezervacija> rezervacije = new List<Rezervacija>();
             try
             {
-                rezervacije = await _context.Rezervacija.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToListAsync();
+                rezervacije = await _context.Rezervacija.Where(rezervacija => mjesta.Find(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToListAsync();
             }
             catch
             {

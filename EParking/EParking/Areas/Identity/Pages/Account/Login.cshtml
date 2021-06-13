@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <style>
     .buttonclass {
         display: inline-block;
@@ -19,6 +20,26 @@
         cursor: pointer;
         width: 200px
     }
+
+    .float-container {
+        width: 350px;
+    }
+
+    .float-child1 {
+        width: 60%;
+        float: left;
+    }
+
+    .float-child2 {
+        width: 20%;
+        float: left;
+    }
+
+    .float-child3 {
+        width: 20%;
+        float: left;
+    }
+
 </style>
 
 <h1>@ViewData["Title"]</h1>
@@ -34,9 +55,16 @@
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                <div class="float-container">
+                    <div class="float-child3">
+                        <label asp-for="Input.Password"></label>
+                    </div>
+                    <div class="float-child1">
+                        <input id="unesenaSifra" asp-for="Input.Password" class="form-control"/>
+                    </div>
+                    <div class="float-child2">
+                        <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; margin-top:10px; cursor: pointer;"></i>
+                    </div>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 
@@ -56,6 +84,17 @@
     </div>
     
 </div>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#unesenaSifra');
+
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

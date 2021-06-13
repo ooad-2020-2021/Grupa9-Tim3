@@ -93,7 +93,7 @@ namespace EParking.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Password je promijenje.";
+            StatusMessage = "Password je promijenjen.";
 
             return RedirectToPage();
         }

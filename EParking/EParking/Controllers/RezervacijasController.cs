@@ -208,11 +208,14 @@ namespace EParking.Controllers
             var trenutniKorisnik = await _context.Users.FirstOrDefaultAsync(usercic => usercic.UserName.Equals(user.UserName));
             List<Rezervacija> rezervacije = await _context.Rezervacija.Where(rezervacija => rezervacija.KorisnikID.Equals(trenutniKorisnik.Id)).ToListAsync();
             List<Rezervacija> izabraneRezervacija = new List<Rezervacija>();
+            List<string> naziviParkinga = new List<string>();
+
             foreach (Rezervacija rezervacija in rezervacije)
             {
+                var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
                 if (rezervacija.VrijemeIsteka < System.DateTime.Now)
                 {
-                    var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
+                    
                     mjesto.Zauzeto = false;
                     Korisnik k = await _context.RegistrovaniKorisnik.FindAsync(rezervacija.KorisnikID);
                     k = rezervacija.AzurirajKorisnika(k);
@@ -223,11 +226,13 @@ namespace EParking.Controllers
                 }
                 else
                 {
+                    var parking = await _context.Parking.FindAsync(mjesto.ParkingId);
+                    naziviParkinga.Add(parking.Naziv);
                     izabraneRezervacija.Add(rezervacija);
                 }
             }
-
-
+           
+            ViewBag.naziviParkinga = naziviParkinga;
             ViewBag.rezervacije = izabraneRezervacija;
             return View();
         }
