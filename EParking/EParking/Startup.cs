@@ -31,7 +31,7 @@ namespace EParking
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySQL(
                     Configuration.GetConnectionString("ApplicationDbContext")));
-            services.AddDefaultIdentity<Korisnik>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<Korisnik>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

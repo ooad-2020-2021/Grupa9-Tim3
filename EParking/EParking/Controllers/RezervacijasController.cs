@@ -220,7 +220,6 @@ namespace EParking.Controllers
                     _context.Update(mjesto);
                     _context.Rezervacija.Remove(rezervacija);
                     _context.SaveChangesAsync();
-
                 }
                 else
                 {
@@ -271,7 +270,6 @@ namespace EParking.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index","Pocetna");
         }
-
 
         private bool IzabranaKategorijaVozilaExists(int id)
         {

@@ -127,7 +127,7 @@ namespace EParking.Controllers
                 TimeSpan testni = new TimeSpan(0, 0, 0);
                 if (!parking.PocetakJeftinogVremena.Equals(testni) && !parking.KrajJeftinogVremena.Equals(testni) && (parking.PocetakJeftinogVremena> parking.KrajRadnogVremena || parking.KrajJeftinogVremena< parking.PocetakRadnogVremena))
                 {
-                    ViewBag.poruka = "Jeftino vrijeme mora biti unutar ";
+                    ViewBag.poruka = "Jeftino vrijeme mora biti unutar radnog vremena";
                     return View(parking);
 
                 }
@@ -154,8 +154,6 @@ namespace EParking.Controllers
             
             if (ModelState.IsValid)
             {
-                
-
                 _context.Update(parking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", new { id = id });
@@ -227,7 +225,6 @@ namespace EParking.Controllers
             {
                 return NotFound();
             }
-
             var mjesto = await _context.Mjesto
                 .FirstAsync(m => m.ID == id);
             if (mjesto == null)
