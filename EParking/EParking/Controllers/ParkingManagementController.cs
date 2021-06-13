@@ -93,6 +93,7 @@ namespace EParking.Controllers
             catch (InvalidOperationException e){
 
             }
+            ViewBag.poruka = "";
             ViewBag.mjesta = mjesta;
             ViewBag.rezervacije = izabraneRezervacije;
             return View(parking);
@@ -105,18 +106,37 @@ namespace EParking.Controllers
             {
                 return NotFound();
             }
-            
+            List<Mjesto> mjesta = await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id)).ToListAsync();
+            List<Rezervacija> rezervacije = new List<Rezervacija>();
+            try
+            {
+                rezervacije = await _context.Rezervacija.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID) != null).ToListAsync();
+            }
+            catch
+            {
+
+            }
+            ViewBag.poruka = "";
+            ViewBag.mjesta = mjesta;
+            ViewBag.rezervacije = rezervacije;
+
+
             if (ModelState.IsValid)
             {
+                
+                TimeSpan testni = new TimeSpan(0, 0, 0);
+                if (!parking.PocetakJeftinogVremena.Equals(testni) && !parking.KrajJeftinogVremena.Equals(testni) && (parking.PocetakJeftinogVremena> parking.KrajRadnogVremena || parking.KrajJeftinogVremena< parking.PocetakRadnogVremena))
+                {
+                    ViewBag.poruka = "Jeftino vrijeme mora biti unutar ";
+                    return View(parking);
+
+                }
+
                 _context.Update(parking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index","Pocetna");
             }
-            List<Mjesto> mjesta = await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id)).ToListAsync();
-            IEnumerable<Rezervacija> rezervacije = await _context.Rezervacija.Where(rezervacija => mjesta.First(mjesto => mjesto.ID == rezervacija.MjestoID)!=null).ToListAsync();
             
-            ViewBag.mjesta = mjesta;
-            ViewBag.rezervacije = rezervacije;
             return View(parking);
         }
         [Authorize(Roles = "Administrator,RegistrovaniKorisnik")]
@@ -227,7 +247,7 @@ namespace EParking.Controllers
             var mjesto = await _context.Mjesto.FindAsync(id);
             _context.Mjesto.Remove(mjesto);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { id = id });
         }
 
 

@@ -30,6 +30,7 @@ namespace EParking.Models
         [Required]
         public Boolean OdobrenOSInvaliditetom { get; set; }
         [Required]
+        [RegularExpression(@"-?\d+(?:\.\d+)?", ErrorMessage = "Morate unijeti broj")]
         public double Cijena { get; set; }
 
 
