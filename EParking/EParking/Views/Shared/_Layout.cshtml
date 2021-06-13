@@ -3,18 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EParking</title>
+    <title>Početna - EParking</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-image: url('https://2.bp.blogspot.com/-k7y6-QHTsuk/UAyRqDwPaSI/AAAAAAAAEcI/14PEswHwp7A/s1600/More+Tumblr+Backgrounds+for+guys+light+gray.jpg');
-        background-attachment: fixed;
-        background-position: center;
-">
+<body style="background-image: url('https://www.wallpaperflare.com/static/150/1017/118/gray-road-dark-cloudy-wallpaper.jpg'); background-position: center; background-attachment: fixed; background-repeat: no-repeat ">
     <header>
-        <nav style="background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/04/grey-wallpaper-hd-download-free-grey-background-.jpg');
-        background-attachment: fixed;
-        background-position: center;
+        <nav style="background-image: url('https://www.wallpaperflare.com/static/150/1017/118/gray-road-dark-cloudy-wallpaper.jpg');
+        
+        background-position: top;
+        
     "class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div  class="container">
                 <a style="margin-left:-30px; margin-right:30px; font-size:26px; margin-bottom:5px; color:black; text-shadow:1px 2px 2px lightgray; text-decoration:none;" asp-area="" asp-controller="Pocetna" asp-action="Index"><b>Početna</b></a>
@@ -28,17 +26,17 @@
                     @if (User.Identity.IsAuthenticated)
                        {
                             <li class="nav-item">
-                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:15px; text-decoration:none;" asp-area="" asp-controller="Rezervacijas" asp-action="KategorijaVozila"><b>Rezervacija</b></a>
+                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:21px; margin-top:15px; margin-left:15px; text-decoration:none;" asp-area="" asp-controller="Rezervacijas" asp-action="KategorijaVozila"><b>Rezervacija</b></a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px; text-decoration:none;" asp-area="" asp-controller="ParkingManagement" asp-action="OdaberiParking"><b>Upravljanje parkingom</b></a>
+                                <a style="font-family:Brush Script MT; color:darkgreen; font-size:21px; margin-top:15px; margin-left:25px; text-decoration:none;" asp-area="" asp-controller="ParkingManagement" asp-action="OdaberiParking"><b>Upravljanje parkingom</b></a>
                             </li>
 
 
                             @if (User.IsInRole("Administrator"))
                             {
                                 <li class="nav-item">
-                                    <a style="font-family:Brush Script MT; color:darkgreen; font-size:18px; margin-top:15px; margin-left:25px; text-decoration:none;" asp-area="" asp-controller="Administracija" asp-action="Index"><b>Administracija</b></a>
+                                    <a style="font-family:Brush Script MT; color:darkgreen; font-size:21px; margin-top:15px; margin-left:25px; text-decoration:none;" asp-area="" asp-controller="Administracija" asp-action="Index"><b>Administracija</b></a>
                                 </li>
                             }
                         }

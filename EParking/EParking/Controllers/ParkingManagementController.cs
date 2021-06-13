@@ -72,6 +72,9 @@ namespace EParking.Controllers
                         mjesto.Zauzeto = false;
                     }
                     _context.Update(mjesto);
+                    Korisnik k = await _context.RegistrovaniKorisnik.FindAsync(rezervacija.KorisnikID);
+                    k = rezervacija.AzurirajKorisnika(k);
+                    _context.Update(k);
                     _context.Rezervacija.Remove(rezervacija);
                     _context.SaveChangesAsync();
                     

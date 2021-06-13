@@ -14,6 +14,9 @@ namespace EParking.Models
         {
             return cijena;
         }
-        
+        public double DajCijena(double cijena)
+        {
+            return cijena;
+        }
     }
 }

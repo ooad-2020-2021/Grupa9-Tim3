@@ -43,6 +43,12 @@ namespace EParking.Models
         {
 
         }
+        public Korisnik AzurirajKorisnika(Korisnik k)
+        {
+            k.ProvedenoVrijeme  = VrijemeIsteka.TimeOfDay.Hours - VrijemePocetka.TimeOfDay.Hours;
+            k.UzastopnoVrijeme = VrijemeIsteka.TimeOfDay.Hours - VrijemePocetka.TimeOfDay.Hours;
+            return k;
+        }
 
         #endregion
         

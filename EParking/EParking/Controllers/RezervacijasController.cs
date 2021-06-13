@@ -214,6 +214,9 @@ namespace EParking.Controllers
                 {
                     var mjesto = await _context.Mjesto.FindAsync(rezervacija.MjestoID);
                     mjesto.Zauzeto = false;
+                    Korisnik k = await _context.RegistrovaniKorisnik.FindAsync(rezervacija.KorisnikID);
+                    k = rezervacija.AzurirajKorisnika(k);
+                    _context.Update(k);
                     _context.Update(mjesto);
                     _context.Rezervacija.Remove(rezervacija);
                     _context.SaveChangesAsync();
@@ -260,6 +263,9 @@ namespace EParking.Controllers
             {
                 mjesto.Zauzeto = false;
             }
+            Korisnik k = await _context.RegistrovaniKorisnik.FindAsync(rezervacija.KorisnikID);
+            k = rezervacija.AzurirajKorisnika(k);
+            _context.Update(k);
             _context.Update(mjesto);
             _context.Rezervacija.Remove(rezervacija);
             await _context.SaveChangesAsync();

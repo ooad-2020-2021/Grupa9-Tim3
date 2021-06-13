@@ -108,7 +108,7 @@ namespace EParking.Areas.Identity.Pages.Account.Manage
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Vaš email je nepromijenjen.";
             return RedirectToPage();
         }
 

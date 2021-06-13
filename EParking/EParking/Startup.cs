@@ -46,8 +46,24 @@ namespace EParking
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app ,IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, ApplicationDbContext context ,IWebHostEnvironment env)
         {
+            List<Korisnik> korisnici = context.RegistrovaniKorisnik.ToList();
+            if (System.DateTime.Now.Day.Equals(1))
+            {
+                korisnici.ForEach(korisnik => { korisnik.ProvedenoVrijeme = 0;
+                    context.Update(korisnik);
+                }); 
+                context.SaveChanges();
+            }
+            if (System.DateTime.Now.DayOfWeek.Equals(1))
+            {
+                korisnici.ForEach(korisnik => {
+                    korisnik.UzastopnoVrijeme = 0;
+                    context.Update(korisnik);
+                });
+                context.SaveChanges();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

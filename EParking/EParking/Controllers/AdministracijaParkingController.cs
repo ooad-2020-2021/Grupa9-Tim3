@@ -147,6 +147,14 @@ namespace EParking.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var parking = await _context.Parking.FindAsync(id);
+            List<Mjesto> mjestaParkinga = await _context.Mjesto.Where(mjesto => mjesto.ParkingId.Equals(id)).ToListAsync();
+            List<Rezervacija> rezervacije = new List<Rezervacija>();
+            foreach (Mjesto item in mjestaParkinga) {
+                rezervacije.AddRange(await _context.Rezervacija.Where(rezervacija => rezervacija.MjestoID.Equals(item.ID)).ToListAsync());
+                
+            }
+            _context.RemoveRange(mjestaParkinga);
+            _context.RemoveRange(rezervacije);
             _context.Parking.Remove(parking);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
